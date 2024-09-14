@@ -1,35 +1,31 @@
 import React from 'react';
-import { StyleSheet, View, Button, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
-export default function LoginScreen() {
+export default function AuthLandingScreen() {
   const router = useRouter();
 
-  const handleLogin = () => {
-    // Add login logic here
-    router.replace('/(tabs)');
+  const navigateToLogin = () => {
+    router.push('/(auth)/login-form');
   };
 
-  const handleSignUp = () => {
-    // Add sign up logic here
-    router.replace('/(tabs)');
+  const navigateToSignUp = () => {
+    router.push('/(auth)/signup-form');
   };
 
   return (
     <ThemedView style={styles.container}>
       <ThemedText style={styles.title}>Welcome to SuberTuder</ThemedText>
       <View style={styles.buttonContainer}>
-        <Button
-          title="Login"
-          onPress={handleLogin}
-        />
+        <TouchableOpacity style={styles.button} onPress={navigateToLogin}>
+          <ThemedText style={styles.buttonText}>Login</ThemedText>
+        </TouchableOpacity>
         <View style={styles.buttonSpacing} />
-        <Button
-          title="Sign Up"
-          onPress={handleSignUp}
-        />
+        <TouchableOpacity style={styles.button} onPress={navigateToSignUp}>
+          <ThemedText style={styles.buttonText}>Sign Up</ThemedText>
+        </TouchableOpacity>
       </View>
     </ThemedView>
   );
@@ -48,6 +44,17 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '100%',
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   buttonSpacing: {
     height: 10,
