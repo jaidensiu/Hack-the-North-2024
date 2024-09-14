@@ -1,78 +1,180 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { Picker } from '@react-native-picker/picker';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 export default function SignupFormScreen() {
+  const [name, setName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [age, setAge] = useState('18');
+  const [gender, setGender] = useState('Male');
   const router = useRouter();
 
   const handleSignup = () => {
-    // Add signup logic here
-    console.log('Signup with:', email, password, confirmPassword);
+    // HI KIM
+    console.log('Signup with:', name, phoneNumber, email, age, gender);
     router.replace('/(tabs)');
   };
 
   return (
-    <ThemedView style={styles.container}>
-      <ThemedText style={styles.title}>Sign Up</ThemedText>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <ThemedText style={styles.buttonText}>Sign Up</ThemedText>
-      </TouchableOpacity>
-    </ThemedView>
+    <SafeAreaView style={styles.safeArea}>
+      <ThemedView style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <Ionicons name="arrow-back" size={24} color="black" />
+          </TouchableOpacity>
+          <ThemedText style={styles.title}>Sign Up</ThemedText>
+          <View style={styles.placeholderIcon} />
+        </View>
+
+        <View style={styles.form}>
+          <ThemedText style={styles.label}>Name*</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={name}
+            onChangeText={setName}
+            placeholder="Tanzim Kabir"
+          />
+
+          <ThemedText style={styles.label}>Phone no.*</ThemedText>
+          <View style={styles.phoneInput}>
+            <TextInput
+              style={styles.countryCode}
+              value="+880"
+              editable={false}
+            />
+            <TextInput
+              style={styles.phoneNumber}
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+              placeholder="1710008927"
+              keyboardType="phone-pad"
+            />
+          </View>
+
+          <ThemedText style={styles.label}>Email</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            placeholder="name@example.com"
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+
+          <View style={styles.row}>
+            <View style={styles.halfWidth}>
+              <ThemedText style={styles.label}>Age</ThemedText>
+              <Picker
+                selectedValue={age}
+                onValueChange={(itemValue) => setAge(itemValue)}
+                style={styles.picker}
+              >
+                {[...Array(83)].map((_, i) => (
+                  <Picker.Item key={i} label={`${i+18}`} value={`${i+18}`} />
+                ))}
+              </Picker>
+            </View>
+            <View style={styles.halfWidth}>
+              <ThemedText style={styles.label}>Gender</ThemedText>
+              <Picker
+                selectedValue={gender}
+                onValueChange={(itemValue) => setGender(itemValue)}
+                style={styles.picker}
+              >
+                <Picker.Item label="Male" value="Male" />
+                <Picker.Item label="Female" value="Female" />
+                <Picker.Item label="Other" value="Other" />
+              </Picker>
+            </View>
+          </View>
+
+          <TouchableOpacity style={styles.button} onPress={handleSignup}>
+            <ThemedText style={styles.buttonText}>Submit</ThemedText>
+          </TouchableOpacity>
+        </View>
+      </ThemedView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     padding: 20,
   },
-  title: {
-    fontSize: 24,
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 20,
   },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  placeholderIcon: {
+    width: 24,
+    height: 24,
+  },
+  form: {
+    flex: 1,
+  },
+  label: {
+    fontSize: 14,
+    marginBottom: 5,
+  },
   input: {
-    width: '100%',
-    height: 40,
-    borderColor: 'gray',
     borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 15,
+  },
+  phoneInput: {
+    flexDirection: 'row',
+    marginBottom: 15,
+  },
+  countryCode: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    width: 60,
+    marginRight: 10,
+  },
+  phoneNumber: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+  },
+  halfWidth: {
+    width: '48%',
+  },
+  picker: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: 'green',
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
-    width: '100%',
   },
   buttonText: {
     color: 'white',
