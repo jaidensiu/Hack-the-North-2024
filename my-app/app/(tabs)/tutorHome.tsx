@@ -59,7 +59,7 @@ export default function HomeScreen() {
   return (
     <>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Super Tutor</ThemedText>
+        <ThemedText type="title">SuberTuder</ThemedText>
       </ThemedView>
       <ScrollView
         headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}>

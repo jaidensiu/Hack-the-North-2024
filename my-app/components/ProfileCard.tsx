@@ -1,19 +1,22 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, TouchableOpacity, Modal, View, TextInput, Button } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 
 interface ProfileCardProps {
   title: string;
   value: string | number;
+  onPress?: (field: string, currentValue: string | number) => void;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ title, value }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ title, value, onPress }) => {
   return (
-    <ThemedView style={styles.card}>
-      <ThemedText type="subtitle" style={styles.title}>{title}</ThemedText>
-      <ThemedText>{value}</ThemedText>
-    </ThemedView>
+    <TouchableOpacity onPress={() => onPress?.(title, value)}>
+      <ThemedView style={styles.card}>
+        <ThemedText type="subtitle" style={styles.title}>{title}</ThemedText>
+        <ThemedText>{value}</ThemedText>
+      </ThemedView>
+    </TouchableOpacity>
   );
 }
 
