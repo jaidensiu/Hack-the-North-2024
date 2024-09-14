@@ -33,7 +33,7 @@ export default function RootLayout() {
 });
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={DefaultTheme}>
       <ConvexProvider client={convex}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
