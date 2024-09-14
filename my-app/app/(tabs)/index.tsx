@@ -1,4 +1,4 @@
-import { Image, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import ScrollView from '@/components/ScrollView';
 import { ThemedText } from '@/components/ThemedText';
@@ -8,7 +8,7 @@ export default function HomeScreen() {
   return (
     <>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Suber Tutor</ThemedText>
+        <ThemedText type="title">SupaTooda</ThemedText>
       </ThemedView>
       <ScrollView
         headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}>
@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 96,
-    paddingLeft: 32
+    paddingTop: 80,
+    paddingLeft: 32,
+    paddingBottom: 8
   },
 });

@@ -1,4 +1,4 @@
-import { Image, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import ScrollView from '@/components/ScrollView';
 import { ThemedText } from '@/components/ThemedText';
@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 96,
-    paddingLeft: 32
+    paddingTop: 80,
+    paddingLeft: 32,
+    paddingBottom: 8
   },
 });
