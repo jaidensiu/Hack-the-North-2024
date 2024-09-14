@@ -19,14 +19,15 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ title, value }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
-    padding: 16,
     borderRadius: 8,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
+    padding: 16,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   title: {
     marginBottom: 8,
