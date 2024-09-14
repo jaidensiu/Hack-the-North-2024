@@ -41,6 +41,17 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="convex"
+        options={{
+          title: 'Convex Database',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'receipt' : 'receipt-outline'} color={color} />
+          ),
+        }}
+      />
     </Tabs>
+    
+    
   );
 }
