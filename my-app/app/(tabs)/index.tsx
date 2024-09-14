@@ -6,12 +6,22 @@ import { ThemedView } from '@/components/ThemedView';
 
 export default function HomeScreen() {
   return (
-    <ScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}>
+    <>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Uber Tutor</ThemedText>
+        <ThemedText type="title">Suber Tutor</ThemedText>
       </ThemedView>
-    </ScrollView>
+      <ScrollView
+        headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}>
+        <ThemedView>
+          <ThemedText>item0</ThemedText>
+          <ThemedText>item1</ThemedText>
+          <ThemedText>item2</ThemedText>
+          <ThemedText>item3</ThemedText>
+          <ThemedText>item4</ThemedText>
+          <ThemedText>item5</ThemedText>
+        </ThemedView>
+      </ScrollView>
+    </>
   );
 }
 
@@ -19,17 +29,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+    paddingTop: 96,
+    paddingLeft: 32
   },
 });
