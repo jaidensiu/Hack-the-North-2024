@@ -14,11 +14,13 @@ export default defineSchema({
         overallRating: v.int64()
     }),
     sessions: defineTable({
-        mainUserID: v.id("users"),
-        userID2: v.id("users"),
-        feedback: v.string(),
-        rating: v.int64(),
-    }).index('mainUserID', ['mainUserID'])
+        studentID: v.id("users"),
+        tutorID: v.id("users"),
+        studentsFeedback: v.string(),
+        studentsRating: v.int64(),
+        tutorsFeedback: v.string(),
+        tutorsRating: v.int64(),
+    }).index('studentID', ['studentID'])
     ,
     requests: defineTable({
         studentID: v.id("users"),

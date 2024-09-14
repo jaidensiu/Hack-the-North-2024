@@ -9,6 +9,24 @@ export const get = query({
     },
 });
 
+export const getUser = query({
+    args: { email: v.string() },
+    handler: async (ctx, args) => {
+        const email = args.email
+        return await ctx.db.query("users")
+            .filter((q) => q.eq(q.field("email"), email)).first();
+    },
+});
+
+export const updateUserSessionHistory = mutation({
+    args: { id: v.id("users"), sessionHistory: v.array(v.id("sessions")) },
+    handler: async (ctx, args) => {
+        const id = args.id;
+        const sessionHistory = args.sessionHistory;
+        await ctx.db.patch(id, { sessionHistory: sessionHistory });
+    },
+});
+
 export const createNewUser = mutation({
     args: {
         firstName: v.string(),
@@ -37,18 +55,45 @@ export const createNewUser = mutation({
     },
 });
 
-// export const createNewRequest = mutation({
-//     args: { text: v.string() },
-//     handler: async (ctx, args) => {
-//         const taskId = await ctx.db.insert("requests", { text: args.text });
-//         // do something with `taskId`
-//     },
-// });
+export const createNewRequest = mutation({
+    args: {
+        studentID: v.id("users"),
+        lat: v.float64(),
+        long: v.float64(),
+        isRequestAccepted: v.boolean()
+    },
+    handler: async (ctx, args) => {
+        const requestID = await ctx.db.insert("requests", {
+            studentID: args.studentID,
+            lat: args.lat,
+            long: args.long,
+            isRequestAccepted: args.isRequestAccepted
+        });
 
-// export const createNewSession = mutation({
-//     args: { text: v.string() },
-//     handler: async (ctx, args) => {
-//         const taskId = await ctx.db.insert("sessions", { text: args.text });
-//         // do something with `taskId`
-//     },
-// });
+        return requestID;
+    },
+});
+
+export const createNewSession = mutation({
+    args: {
+        studentID: v.id("users"),
+        tutorID: v.id("users"),
+        studentsFeedback: v.string(),
+        studentsRating: v.int64(),
+        tutorsFeedback: v.string(),
+        tutorsRating: v.int64()
+    },
+    handler: async (ctx, args) => {
+        const sessionID = await ctx.db.insert("sessions", {
+            studentID: args.studentID,
+            tutorID: args.tutorID,
+            studentsFeedback: args.studentsFeedback,
+            studentsRating: args.studentsRating,
+            tutorsFeedback: args.tutorsFeedback,
+            tutorsRating: args.tutorsRating
+        });
+
+
+        return sessionID;
+    },
+});
