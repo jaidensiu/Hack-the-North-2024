@@ -17,7 +17,7 @@ const DropdownComponent: React.FC<DropdownProps> = ({ label, options }) => {
         onValueChange={(value) => setSelectedValue(value)}
         items={options}
         style={pickerSelectStyles}
-        placeholder={{ label: 'Select an option...', value: null }}
+        placeholder={{ label: 'Select a subect', value: null }}
         value={selectedValue}
       />
     </View>
