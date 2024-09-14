@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
+import { StyleSheet, View, TextInput, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
+import { RadioButton, TouchableRipple } from 'react-native-paper';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
@@ -12,11 +13,12 @@ export default function SignupFormScreen() {
   const [email, setEmail] = useState('');
   const [age, setAge] = useState('18');
   const [gender, setGender] = useState('Male');
+  const [userType, setUserType] = useState<'student' | 'tutor'>('student');
   const router = useRouter();
 
   const handleSignup = () => {
+    console.log('Signup with:', name, phoneNumber, email, age, gender, userType);
     // HI KIM
-    console.log('Signup with:', name, phoneNumber, email, age, gender);
     router.replace('/(tabs)');
   };
 
@@ -92,6 +94,24 @@ export default function SignupFormScreen() {
               </Picker>
             </View>
           </View>
+
+          <ThemedText style={styles.label}>I am a:</ThemedText>
+        <RadioButton.Group onValueChange={value => setUserType(value as 'student' | 'tutor')} value={userType}>
+          <View style={styles.radioGroup}>
+            <TouchableRipple onPress={() => setUserType('student')}>
+              <View style={styles.radioButton}>
+                <RadioButton value="student" />
+                <ThemedText>Student</ThemedText>
+              </View>
+            </TouchableRipple>
+            <TouchableRipple onPress={() => setUserType('tutor')}>
+              <View style={styles.radioButton}>
+                <RadioButton value="tutor" />
+                <ThemedText>Tutor</ThemedText>
+              </View>
+            </TouchableRipple>
+          </View>
+        </RadioButton.Group>
 
           <TouchableOpacity style={styles.button} onPress={handleSignup}>
             <ThemedText style={styles.buttonText}>Submit</ThemedText>
@@ -170,9 +190,35 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 5,
   },
+  radioGroup: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 15,
+  },
+  radioButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  radioCircle: {
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#000',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+  },
+  radioCircleSelected: {
+    borderColor: 'green',
+  },
+  radioLabel: {
+    fontSize: 16,
+  },
   button: {
     backgroundColor: 'green',
     padding: 15,
+    marginTop: 20,
     borderRadius: 5,
     alignItems: 'center',
   },
