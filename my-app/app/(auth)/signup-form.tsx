@@ -210,13 +210,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   radioCircleSelected: {
-    borderColor: 'green',
+    borderColor: '#44ba5d',
   },
   radioLabel: {
     fontSize: 16,
   },
   button: {
-    backgroundColor: 'green',
+    backgroundColor: '#44ba5d',
     padding: 15,
     marginTop: 20,
     borderRadius: 5,
