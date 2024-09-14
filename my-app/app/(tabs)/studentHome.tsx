@@ -1,17 +1,16 @@
-// app/(tabs)/profile.tsx
 import React from "react";
 import { StyleSheet } from "react-native";
-import Profile from "@/components/profile/Profile";
+import { StudentHome } from "@/components/home/StudentHome";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 
-export default function ProfileScreen() {
+export default function HomeScreen() {
   return (
     <>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Your Profile</ThemedText>
+        <ThemedText type="title">SuberTuder</ThemedText>
       </ThemedView>
-      <Profile />
+      <StudentHome />
     </>
   );
 }
