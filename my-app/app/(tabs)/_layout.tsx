@@ -1,9 +1,9 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Tabs } from "expo-router";
+import React from "react";
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -11,51 +11,67 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
-      }}>
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="studentHome"
         options={{
-          title: 'StudentHome',
+          title: "StudentHome",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <TabBarIcon
+              name={focused ? "home" : "home-outline"}
+              color={color}
+            />
           ),
         }}
       />
       <Tabs.Screen
         name="tutorHome"
         options={{
-          title: 'TutorHome',
+          title: "TutorHome",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <TabBarIcon
+              name={focused ? "home" : "home-outline"}
+              color={color}
+            />
           ),
         }}
       />
       <Tabs.Screen
         name="activity"
         options={{
-          title: 'Activity',
+          title: "Activity",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'receipt' : 'receipt-outline'} color={color} />
+            <TabBarIcon
+              name={focused ? "receipt" : "receipt-outline"}
+              color={color}
+            />
           ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: "Profile",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
+            <TabBarIcon
+              name={focused ? "person" : "person-outline"}
+              color={color}
+            />
           ),
         }}
       />
       <Tabs.Screen
         name="convex"
         options={{
-          title: 'Convex Database',
+          title: "Convex Database",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'receipt' : 'receipt-outline'} color={color} />
+            <TabBarIcon
+              name={focused ? "receipt" : "receipt-outline"}
+              color={color}
+            />
           ),
         }}
       />

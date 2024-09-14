@@ -3,7 +3,7 @@ import { StyleSheet, View, Modal, TextInput, Button, Text } from 'react-native';
 import ScrollView from '@/components/ScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import ProfileCard from '@/components/ProfileCard';
+import ProfileCard from '@/components/profile/ProfileCard';
 
 interface ProfileScreenProps {
   name: string;
@@ -89,8 +89,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ name, role, rating, rate,
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingTop: 80,
     paddingLeft: 32,
     paddingBottom: 8,
