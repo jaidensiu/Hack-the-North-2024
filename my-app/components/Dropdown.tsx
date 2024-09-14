@@ -17,7 +17,7 @@ const DropdownComponent: React.FC<DropdownProps> = ({ label, options }) => {
         onValueChange={(value) => setSelectedValue(value)}
         items={options}
         style={pickerSelectStyles}
-        placeholder={{ label: 'Select a subect', value: null }}
+        placeholder={{ label: 'All', value: null }}
         value={selectedValue}
       />
     </View>
@@ -36,14 +36,15 @@ const styles = StyleSheet.create({
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
+    borderRadius: 8,
+    padding: 12,
+    borderColor: '#ddd',
     borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 4,
-    color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   inputAndroid: {
     fontSize: 16,
@@ -53,7 +54,7 @@ const pickerSelectStyles = StyleSheet.create({
     borderColor: 'purple',
     borderRadius: 8,
     color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
+    paddingRight: 30,
   },
 });
 

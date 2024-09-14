@@ -59,11 +59,12 @@ export default function HomeScreen() {
   return (
     <>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Requests</ThemedText>
+        <ThemedText type="title">Super Tutor</ThemedText>
       </ThemedView>
       <ScrollView
         headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}>
         <ThemedView>
+          <ThemedText style={styles.subtitle} type="subtitle">Requests</ThemedText>
           {users.map((user) => (
             <UserCard
               key={user.id}
@@ -87,4 +88,7 @@ const styles = StyleSheet.create({
     paddingLeft: 32,
     paddingBottom: 8
   },
+  subtitle: {
+    paddingBottom: 16
+  }
 });
