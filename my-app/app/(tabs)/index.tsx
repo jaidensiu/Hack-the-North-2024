@@ -16,13 +16,14 @@ export default function HomeScreen() {
   return (
     <>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">SuberTuder</ThemedText>
+        <ThemedText type="title">Super Tutor</ThemedText>
       </ThemedView>
       <ScrollView
-        headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}>
+        headerBackgroundColor={{ light: '#A1CEDC', dark: '#A1CEDC' }}>
         <ThemedView>
+          <ThemedText type="subtitle">Subject</ThemedText>
           <DropdownComponent
-            label="Subject"
+            label=""
             options={dropdownOptions} />
           <ThemedText>item0</ThemedText>
           <ThemedText>item1</ThemedText>

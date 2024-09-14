@@ -1,0 +1,5 @@
+flask
+django
+python-dotenv
+groq
+cohere
