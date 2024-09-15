@@ -53,6 +53,16 @@ export const getUser = query({
     },
 });
 
+export const getTutorSessions = query({
+    args: { id: v.id("users") },
+    handler: async (ctx, args) => {
+        const id = args.id
+        return await ctx.db.query("sessions")
+            .filter((q) => q.eq(q.field("tutorID"), id)).collect();
+
+    },
+});
+
 // Adds a session to a student/tutors history
 // input: user id and array of sessions
 export const updateUserSessionHistory = mutation({

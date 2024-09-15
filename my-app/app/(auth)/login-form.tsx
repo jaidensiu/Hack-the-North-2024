@@ -53,7 +53,7 @@ export default function LoginScreen() {
   useEffect(() => {
     if (userID) {
       console.log(userID);
-      router.replace("/(tabs)"); // Navigate to the next screen once the user ID is set
+      router.push("/onboarding/choose-subject"); // Navigate to the next screen once the user ID is set
     }
   }, [userID]);
 
