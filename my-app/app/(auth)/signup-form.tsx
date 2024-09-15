@@ -77,7 +77,7 @@ export default function SignupFormScreen() {
       console.log("User created:", result);
       // Navigate to the appropriate home screen based on user type
       if (userType === "student") {
-        router.replace({
+        router.push({
           pathname: "/onboarding/choose-subject",
           params: {
             user: JSON.stringify({
@@ -91,8 +91,8 @@ export default function SignupFormScreen() {
           }, // TODO: Fix user interface
         });
       } else {
-        router.replace({
-          pathname: "/onboarding/choose-subject" as const,
+        router.push({
+          pathname: "/onboarding/choose-subject",
           params: {
             user: JSON.stringify({
               name,

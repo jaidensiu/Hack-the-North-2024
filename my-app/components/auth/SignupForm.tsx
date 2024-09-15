@@ -135,12 +135,9 @@ export default function SignUpForm({ onSignUp, onBack }: SignUpFormProps) {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
   container: {
     flex: 1, 
-    padding: 20, 
+    padding: 24, 
   },
   header: {
     flexDirection: "row", 
@@ -160,8 +157,8 @@ const styles = StyleSheet.create({
     flexGrow: 1, 
   },
   label: {
-    fontSize: 14, 
-    marginBottom: 4,
+    fontSize: 16, 
+    marginBottom: 8,
     fontWeight: 'bold'
   },
   input: {
