@@ -1,6 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import { SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
 import LoginForm from "@/components/auth/LoginForm";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
@@ -9,6 +18,7 @@ import { UserContext } from "../contexts/userContext";
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false); // State to track form submission
+  // const [userID, setUserID] = useState<string | null>(null);
   const router = useRouter();
   const context = useContext(UserContext);
 
@@ -25,18 +35,14 @@ export default function LoginScreen() {
   });
 
   useEffect(() => {
-    if (userQuery !== undefined) {
-      if (userQuery === null) {
-        // No user found, redirect to sign-up
-        router.replace("/(auth)/signup-form");
-      } else {
-        setUserID(userQuery._id);
-        console.log("Retrieved user:", userQuery);
-      }
+    if (userQuery) {
+      setUserID(userQuery?._id); // Set the retrieved user ID after query resolves
+      console.log("Retrieved user:", userQuery);
     }
   }, [userQuery]);
 
   const handleLogin = (email: string) => {
+    console.log("Logging in with email:", email);
     setEmail(email);
     setIsSubmitted(true); // Trigger the query by marking the form as submitted
   };
@@ -47,7 +53,7 @@ export default function LoginScreen() {
       router.replace("/(tabs)"); // Navigate to the next screen once the user ID is set
     }
   }, [userID]);
-  // Get user id, if not available in table, go to sign up form right away
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <LoginForm onLogin={handleLogin} onBack={() => router.back()} />
