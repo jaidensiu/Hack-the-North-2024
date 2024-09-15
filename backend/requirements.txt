@@ -1,5 +1,7 @@
 flask
 django
+requests
+convex
 python-dotenv
 groq
 cohere
