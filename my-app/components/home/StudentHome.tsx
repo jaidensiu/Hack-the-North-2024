@@ -15,7 +15,7 @@ export function StudentHome() {
   return (
     <ScrollView headerBackgroundColor={{ light: "#A1CEDC", dark: "#A1CEDC" }}>
       <ThemedView>
-        <ThemedText type="subtitle">Subject</ThemedText>
+        <ThemedText type="subtitle">Filter By Subject</ThemedText>
         <SubjectPicker options={dropdownOptions} />
         <ThemedText>item0</ThemedText>
         <ThemedText>item1</ThemedText>

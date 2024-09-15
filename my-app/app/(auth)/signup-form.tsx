@@ -7,25 +7,27 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
-import SignUpForm from "@/components/auth/SignupForm";
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { RadioButton, TouchableRipple } from "react-native-paper";
+import SignupForm from "@/components/auth/SignupForm";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { UserContext } from "../contexts/userContext";
+import { UserContext } from '../contexts/userContext';
+
+
 
 export default function SignupFormScreen() {
   const router = useRouter();
   const context = useContext(UserContext);
-  const [name, setName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [age, setAge] = useState("18");
-  const [gender, setGender] = useState("Male");
-  const [userType, setUserType] = useState<"student" | "tutor">("student");
+  const [name, setName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [age, setAge] = useState('18');
+  const [gender, setGender] = useState('Male');
+  const [userType, setUserType] = useState<'student' | 'tutor'>('student');
 
   interface SignUpData {
     firstName: string;
@@ -36,9 +38,8 @@ export default function SignupFormScreen() {
     gender: string;
     userType: string;
   }
-
   if (!context) {
-    throw new Error("UserProfile must be used within a UserProvider");
+    throw new Error('UserProfile must be used within a UserProvider');
   }
   const { userID, setUserID } = context;
   const createUser = useMutation(api.tasks.createNewUser);
@@ -73,12 +74,12 @@ export default function SignupFormScreen() {
         sessionHistory: [],
         overallRating: BigInt(0),
       });
-      setUserID(result); // Save the result to the state
-      console.log("User created:", result);
+      setUserID(result);  // Save the result to the state
+      console.log('User created:', result);
       // Navigate to the appropriate home screen based on user type
-      if (userType === "student") {
-        router.replace({
-          pathname: "/(tabs)/studentHome",
+    if (userType === "student") {
+      router.replace({
+        pathname: "/(tabs)/studentHome",
           params: {
             user: JSON.stringify({
               name,
@@ -89,10 +90,10 @@ export default function SignupFormScreen() {
               userType,
             }),
           }, // TODO: Fix user interface
-        });
-      } else {
-        router.replace({
-          pathname: "/(tabs)/tutorHome",
+      });
+    } else {
+      router.replace({
+        pathname: "/(tabs)/tutorHome",
           params: {
             user: JSON.stringify({
               name,
@@ -103,16 +104,17 @@ export default function SignupFormScreen() {
               userType,
             }),
           },
-        });
-      }
-    } catch (error) {
-      console.error("Error creating user:", error);
+      });
+    }}
+    catch (error) {
+      console.error('Error creating user:', error);
+
     }
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <SignUpForm onSignUp={handleSignUp} onBack={() => router.back()} />
+      <SignupForm onSignUp={handleSignUp} onBack={() => router.back()} />
     </SafeAreaView>
   );
 }
