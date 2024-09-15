@@ -28,8 +28,10 @@ export default defineSchema({
         studentID: v.id("users"),
         tutorID: v.id("users"),
         studentsFeedback: v.string(),
+        studentExercises: v.optional(v.string()),
         studentsRating: v.int64(),
         tutorsFeedback: v.string(),
+        tutorsAIFeedback: v.optional(v.string()),
         tutorsRating: v.int64(),
     }).index('studentID', ['studentID'])
     ,

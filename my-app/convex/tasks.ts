@@ -25,6 +25,7 @@ export const getTutors = query({
 // For login buttion
 // input: email string and whether or not the login button has been pressed yet
 // output: 1 user object that matches the email string
+// Get user based on email
 export const getUser = query({
     args: { email: v.string(), enabled: v.boolean() },
     handler: async (ctx, args) => {
@@ -142,8 +143,10 @@ export const createNewSession = mutation({
         studentID: v.id("users"),
         tutorID: v.id("users"),
         studentsFeedback: v.string(),
+        studentExercises: v.optional(v.string()),
         studentsRating: v.int64(),
         tutorsFeedback: v.string(),
+        tutorsAIFeedback: v.optional(v.string()),
         tutorsRating: v.int64()
     },
     handler: async (ctx, args) => {
@@ -151,12 +154,24 @@ export const createNewSession = mutation({
             studentID: args.studentID,
             tutorID: args.tutorID,
             studentsFeedback: args.studentsFeedback,
+            studentExercises: args.studentExercises ?? "",
             studentsRating: args.studentsRating,
             tutorsFeedback: args.tutorsFeedback,
+            tutorsAIFeedback: args.tutorsAIFeedback ?? "",
             tutorsRating: args.tutorsRating
         });
 
 
         return sessionID;
+    },
+});
+
+export const updateSessionFeedback = mutation({
+    args: { id: v.id("sessions"), studentExercises: v.string(), tutorsAIFeedback: v.string()},
+    handler: async (ctx, args) => {
+        const id = args.id;
+        const studentExercises = args.studentExercises;
+        const tutorsAIFeedback = args.tutorsAIFeedback;
+        await ctx.db.patch(id, { studentExercises: studentExercises, tutorsAIFeedback: tutorsAIFeedback });
     },
 });
