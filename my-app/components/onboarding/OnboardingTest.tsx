@@ -16,6 +16,11 @@ interface OnboardingTestProps {
   onBack: () => void;
 }
 
+function extractScore(text: string): number {
+  const match = text.match(/\d+/);
+  return match ? parseInt(match[0]) : 0;
+}
+
 const API_URL = "http://10.37.118.75:6000";
 
 export default function OnboardingTest({
@@ -55,13 +60,12 @@ export default function OnboardingTest({
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const resultScore = await response.text();
-      // convert string to number
-      // if
-      const responseText = parseInt(resultScore, 10);
-      console.log("Got score?", responseText);
+      const result = await response.json();
 
-      onTestComplete(responseText, writtenAnswers.length); // TODO: Replace with actual score and total questions
+      const resultScore = extractScore(result["score"]);
+      console.log("Got score?", resultScore);
+
+      onTestComplete(resultScore, writtenAnswers.length); // TODO: Replace with actual score and total questions
     } catch (error) {
       console.error("Error submitting test:", error);
     }
