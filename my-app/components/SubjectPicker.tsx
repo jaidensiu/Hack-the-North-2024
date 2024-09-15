@@ -18,7 +18,8 @@ const SubjectPicker: React.FC<DropdownProps> = ({ options }) => {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.selectBox}
-        onPress={() => setModalVisible(true)}>
+        onPress={() => setModalVisible(true)}
+      >
         <Text style={styles.selectedValue}>
           {selectedValue !== null ? options.find(option => option.value === selectedValue)?.label : 'All'}
         </Text>
@@ -28,7 +29,8 @@ const SubjectPicker: React.FC<DropdownProps> = ({ options }) => {
         animationType="fade"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(!modalVisible)}>
+        onRequestClose={() => setModalVisible(!modalVisible)}
+      >
         <View style={styles.modalContainer}>
           <View style={styles.modalView}>
             <Text style={styles.modalTitle}>Filter by Subject</Text>
@@ -37,14 +39,16 @@ const SubjectPicker: React.FC<DropdownProps> = ({ options }) => {
                 <TouchableOpacity
                   key={option.value}
                   onPress={() => handleOptionPress(option.value)}
-                  style={styles.option}>
+                  style={styles.option}
+                >
                   <Text style={styles.optionText}>{option.label}</Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
             <TouchableOpacity
               style={styles.closeButton}
-              onPress={() => setModalVisible(false)}>
+              onPress={() => setModalVisible(false)}
+            >
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
           </View>
@@ -106,7 +110,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     padding: 10,
-    backgroundColor: '#2196F3',
+    backgroundColor: '#0081FB',
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 10,

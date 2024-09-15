@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   score: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "green",
+    color: "#0081FB",
     marginBottom: 16,
   },
   detail: {
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   finishButton: {
-    backgroundColor: "green",
+    backgroundColor: "#0081FB",
     padding: 16,
     borderRadius: 4,
     alignItems: "center",

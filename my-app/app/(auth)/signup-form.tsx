@@ -32,6 +32,7 @@ export default function SignupFormScreen() {
     age: number;
     gender: string;
     userType: string;
+    location: string;
     password: string;
   }
   if (!context) {
@@ -48,7 +49,8 @@ export default function SignupFormScreen() {
     age,
     gender,
     userType,
-    password
+    password,
+    location
   }: SignUpData) => {
     console.log(
       "Signup with:",
@@ -58,7 +60,8 @@ export default function SignupFormScreen() {
       age,
       gender,
       userType,
-      password
+      password,
+      location
     );
     try {
       const result = await createUser({
@@ -71,7 +74,8 @@ export default function SignupFormScreen() {
         topic: "temporary",
         sessionHistory: [],
         overallRating: BigInt(0),
-        password: password
+        password: password,
+        location: location
       });
       setUserID(result);  // Save the result to the state
       console.log('User created:', result);

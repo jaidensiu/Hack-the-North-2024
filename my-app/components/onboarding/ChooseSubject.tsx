@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   selectedSubjectCard: {
-    backgroundColor: "green",
+    backgroundColor: "#0081FB",
   },
   subjectText: {
     fontSize: 16,
