@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext} from 'react';
 import { StyleSheet, View, TextInput, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,6 +6,10 @@ import { Picker } from '@react-native-picker/picker';
 import { RadioButton, TouchableRipple } from 'react-native-paper';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { UserContext } from '../contexts/userContext';
+
 
 export default function SignupFormScreen() {
   const [name, setName] = useState('');
@@ -15,11 +19,35 @@ export default function SignupFormScreen() {
   const [gender, setGender] = useState('Male');
   const [userType, setUserType] = useState<'student' | 'tutor'>('student');
   const router = useRouter();
+  const context = useContext(UserContext);
 
-  const handleSignup = () => {
+  if (!context) {
+    throw new Error('UserProfile must be used within a UserProvider');
+  }
+  const { userID, setUserID } = context;
+  const createUser = useMutation(api.tasks.createNewUser);
+
+
+  const handleSignup = async () => {
     console.log('Signup with:', name, phoneNumber, email, age, gender, userType);
-    // HI KIM
-    router.replace('/(tabs)');
+    try {
+      const result = await createUser({
+        firstName: name,
+        lastName: "user",
+        email: email,
+        phoneNumber: phoneNumber,
+        type: userType,
+        age: BigInt(14),
+        topic: "temporary",
+        sessionHistory: [],
+        overallRating: BigInt(0),
+      });
+      setUserID(result);  // Save the result to the state
+      console.log('User created:', result);
+      router.replace('/(tabs)');
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
   };
 
   return (
