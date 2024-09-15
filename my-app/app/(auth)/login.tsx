@@ -3,9 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-
 import SuberTuderIcon from '@/assets/images/home_icon.jpg';
-import {useState} from "react"
 
 export default function AuthLandingScreen() {
   const router = useRouter();
@@ -56,8 +54,8 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#44ba5d',
-    padding: 15,
-    borderRadius: 5,
+    padding: 16,
+    borderRadius: 4,
     alignItems: 'center',
   },
   buttonText: {
@@ -66,6 +64,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   buttonSpacing: {
-    height: 10,
+    height: 16,
   },
 });

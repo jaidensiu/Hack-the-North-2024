@@ -1,11 +1,5 @@
 import React, { useState, useContext } from "react";
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
+import { SafeAreaView } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
@@ -13,6 +7,7 @@ import { RadioButton, TouchableRipple } from "react-native-paper";
 import SignupForm from "@/components/auth/SignupForm";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { UserContext } from '../contexts/userContext';
@@ -82,8 +77,8 @@ export default function SignupFormScreen() {
       console.log('User created:', result);
       // Navigate to the appropriate home screen based on user type
       if (userType === "student") {
-        router.replace({
-          pathname: "../onboarding/choose-subject",
+        router.push({
+          pathname: "/onboarding/choose-subject",
           params: {
             user: JSON.stringify({
               name,
@@ -96,8 +91,8 @@ export default function SignupFormScreen() {
           }, // TODO: Fix user interface
         });
       } else {
-        router.replace({
-          pathname: "../onboarding/choose-subject" as const,
+        router.push({
+          pathname: "/onboarding/choose-subject",
           params: {
             user: JSON.stringify({
               name,

@@ -31,14 +31,14 @@ export default function RootLayout() {
 
   return (
     <UserProvider>
-    <ThemeProvider value={DefaultTheme}>
-      <ConvexProvider client={convex}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </ConvexProvider>
-    </ThemeProvider>
+      <ThemeProvider value={DefaultTheme}>
+        <ConvexProvider client={convex}>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </ConvexProvider>
+      </ThemeProvider>
     </UserProvider>
   );
 }
