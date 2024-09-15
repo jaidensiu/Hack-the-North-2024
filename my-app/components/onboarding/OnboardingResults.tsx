@@ -7,23 +7,18 @@ interface OnboardingResultsProps {
   score: number;
   totalQuestions: number;
   onFinish: () => void;
-  onBack: () => void;
 }
 
 export default function OnboardingResults({
   score,
   totalQuestions,
   onFinish,
-  onBack,
 }: OnboardingResultsProps) {
   const percentage = (score / totalQuestions) * 100;
 
   return (
     <ThemedView style={styles.container}>
       <ThemedView style={styles.header}>
-        <TouchableOpacity onPress={onBack}>
-          <ThemedText>Back</ThemedText>
-        </TouchableOpacity>
         <ThemedText style={styles.title}>Your Results</ThemedText>
         <View style={styles.placeholderIcon} />
       </ThemedView>

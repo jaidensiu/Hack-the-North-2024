@@ -3,8 +3,10 @@ from qa_generator import main as generate_questions
 from voice_analyzer import main as analyze_voice
 from score import calculate_score as grader 
 from convex import ConvexClient
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})  # This allows all origins
 
 @app.route('/qas')
 def qas_handler():
@@ -42,4 +44,4 @@ def voice_handler():
     return voice_content
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=6000, debug=True)

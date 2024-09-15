@@ -5,13 +5,15 @@ import OnboardingTest from "@/components/onboarding/OnboardingTest";
 
 export default function OnboardingTestScreen() {
   const router = useRouter();
-  const { writtenQuestions, writtenAnswers } = useLocalSearchParams<{
-    writtenQuestions: string[];
-    writtenAnswers: string[];
-  }>();
+  let { writtenQuestions, writtenAnswers } = useLocalSearchParams();
+  writtenQuestions = JSON.parse(writtenQuestions as string);
+  writtenAnswers = JSON.parse(writtenAnswers as string);
 
-  console.log("written questions in general page: ", writtenQuestions);
-  console.log("written answers in general page: ", writtenAnswers);
+  console.log("written questions in test page: ", writtenQuestions);
+  console.log(
+    "written questions in test page, stringify: ",
+    JSON.stringify(writtenQuestions)
+  );
 
   const handleTestComplete = (score: number, totalQuestions: number) => {
     router.push({
