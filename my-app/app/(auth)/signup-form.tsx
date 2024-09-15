@@ -1,21 +1,7 @@
-import React, { useState, useContext } from "react";
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
+import React from "react";
+import { SafeAreaView } from "react-native";
 import { useRouter } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
-import { RadioButton, TouchableRipple } from "react-native-paper";
 import SignupForm from "@/components/auth/SignupForm";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import { useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import { UserContext } from "../contexts/userContext";
 
 export default function SignupFormScreen() {
   const router = useRouter();
@@ -37,8 +23,9 @@ export default function SignupFormScreen() {
         params: { user: JSON.stringify(data) }, // TODO: Fix user interface
       });
     } else {
-      router.replace({
-        pathname: "/(tabs)/tutorHome",
+      console.log("Navigating to choose subject screen");
+      router.push({
+        pathname: "/onboarding/choose-subject",
         params: { user: JSON.stringify(data) },
       });
     }
