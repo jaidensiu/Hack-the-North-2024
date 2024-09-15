@@ -1,12 +1,22 @@
-import { Tabs } from "expo-router";
-import React from "react";
+import React, { useContext } from "react";
+import { Redirect, Tabs } from "expo-router";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { UserContext } from "../contexts/userContext";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("UserProfile must be used within a UserProvider");
+  }
+  const { personType } = context;
+
+  if (!personType) {
+    return <Redirect href="/login" />;
+  }
 
   return (
     <Tabs
@@ -16,21 +26,9 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="studentHome"
+        name="home"
         options={{
-          title: "StudentHome",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "home" : "home-outline"}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="tutorHome"
-        options={{
-          title: "TutorHome",
+          title: "Home",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "home" : "home-outline"}

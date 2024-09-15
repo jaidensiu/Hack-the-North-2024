@@ -5,11 +5,11 @@ import OnboardingResults from "@/components/onboarding/OnboardingResults";
 
 export default function OnboardingResultsScreen() {
   const router = useRouter();
-  const { score, totalQuestions, subject, userType } = useLocalSearchParams();
+  const { score, totalQuestions, subject } = useLocalSearchParams();
 
   const handleFinish = () => {
     router.replace({
-      pathname: "/(tabs)/tutorHome" as const,
+      pathname: "/(tabs)/home" as const,
       params: { subject },
     });
   };
@@ -20,7 +20,6 @@ export default function OnboardingResultsScreen() {
         score={Number(score)}
         totalQuestions={Number(totalQuestions)}
         onFinish={handleFinish}
-        onBack={() => router.back()}
       />
     </SafeAreaView>
   );

@@ -13,9 +13,8 @@ import { User } from "@/types/User";
 interface UserCardProps extends User {
   onAccept?: (id: string) => void;
   onReject?: (id: string) => void;
+  onRequest?: (id: string) => void;
 }
-
-// don't have bio, gender, image, location
 
 const UserCard: React.FC<UserCardProps> = ({
   id,
@@ -29,6 +28,7 @@ const UserCard: React.FC<UserCardProps> = ({
   aboutMe,
   onAccept,
   onReject,
+  onRequest,
 }) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -81,7 +81,7 @@ const UserCard: React.FC<UserCardProps> = ({
               <ThemedText style={styles.aboutMe}>{aboutMe}</ThemedText>
             </View>
           )}
-          {isTutor && (
+          {userType === "tutor" && (
             <View style={styles.actionContainer}>
               <Pressable
                 onPress={() => onAccept && onAccept(id)}
@@ -100,6 +100,21 @@ const UserCard: React.FC<UserCardProps> = ({
                 ]}
               >
                 <AntDesign name="close" size={24} color="red" />
+              </Pressable>
+            </View>
+          )}
+          {userType === "student" && (
+            <View style={styles.actionContainer}>
+              <Pressable
+                onPress={() => onRequest && onRequest(id)}
+                style={({ pressed }) => [
+                  styles.requestButton,
+                  { backgroundColor: pressed ? "#e6e6ff" : "transparent" },
+                ]}
+              >
+                <ThemedText style={styles.requestButtonText}>
+                  Request Tutor
+                </ThemedText>
               </Pressable>
             </View>
           )}
@@ -163,6 +178,16 @@ const styles = StyleSheet.create({
     padding: 8,
     marginLeft: 8,
     borderRadius: 20,
+  },
+  requestButton: {
+    padding: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#4a4aff",
+  },
+  requestButtonText: {
+    color: "#4a4aff",
+    fontWeight: "bold",
   },
 });
 

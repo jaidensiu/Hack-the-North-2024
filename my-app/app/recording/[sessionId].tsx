@@ -45,9 +45,6 @@ export default function RecordingScreen() {
     await recording.stopAndUnloadAsync();
     const uri = recording.getURI();
     console.log("Recording stopped and stored at", uri);
-    // Here you would typically upload the audio file to your backend
-    // For example: await uploadAudio(uri, sessionId);
-    // router.replace("/(tabs)/activity");
   }
 
   const toggleRecording = () => {

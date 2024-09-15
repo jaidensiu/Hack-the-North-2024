@@ -5,9 +5,8 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
-import { UserProvider } from './contexts/userContext';
+import { UserProvider } from "./contexts/userContext";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {

@@ -16,6 +16,11 @@ interface OnboardingTestProps {
   onBack: () => void;
 }
 
+function extractScore(text: string): number {
+  const match = text.match(/\d+/);
+  return match ? parseInt(match[0]) : 0;
+}
+
 const API_URL = "http://10.37.118.75:6000";
 
 export default function OnboardingTest({
@@ -28,10 +33,6 @@ export default function OnboardingTest({
     new Array(writtenAnswers.length).fill("")
   );
 
-  // print written questions and answers
-  console.log("written questions: ", writtenQuestions);
-  console.log("written answers: ", writtenAnswers);
-
   const handleAnswerChange = (index: number, answer: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = answer;
@@ -39,30 +40,31 @@ export default function OnboardingTest({
   };
 
   const handleSubmit = async () => {
-    // In a real application, you would evaluate the answers here
-    // For this example, we'll just use a mock score
-    const mockScore = 4;
+    try {
+      const fullUrl = `${API_URL}/score`;
+      const response = await fetch(fullUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          answer: writtenAnswers,
+          tutor_response: answers,
+        }),
+      });
 
-    // http fetch request to flask function and get back score
-    const fullUrl = `${API_URL}/score`;
-    const response = await fetch(fullUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        answer: writtenAnswers,
-        tutor_response: answers,
-      }),
-    });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const result = await response.json();
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const resultScore = extractScore(result["score"]);
+      console.log("Got score?", resultScore);
+
+      onTestComplete(resultScore, writtenAnswers.length);
+    } catch (error) {
+      console.error("Error submitting test:", error);
     }
-    const responseText = await response.text();
-    console.log(responseText);
-
-    onTestComplete(2, 2); // TODO: Replace with actual score and total questions
   };
 
   return (

@@ -1,15 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
+import { SafeAreaView } from "react-native";
 import { useRouter } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import LoginForm from "@/components/auth/LoginForm";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";

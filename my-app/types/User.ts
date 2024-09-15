@@ -11,3 +11,5 @@ export interface User {
   avatar: any;
   aboutMe: string;
 }
+
+export type PersonType = "student" | "tutor";

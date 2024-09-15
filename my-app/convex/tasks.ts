@@ -16,7 +16,6 @@ export const getTutors = query({
         const type = "tutor"
         const topic = args.topic
         return await ctx.db.query("users")
-            // .filter((q) => q.eq(q.field("topic"), topic))
             .filter((q) => q.eq(q.field("type"), type)).collect();
 
     },

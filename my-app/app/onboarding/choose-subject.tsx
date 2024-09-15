@@ -1,8 +1,8 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { SafeAreaView } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import ChooseSubject from "@/components/onboarding/ChooseSubject";
-import { UserContext } from "../contexts/userContext"; // Adjust the import path as needed
+import { UserContext } from "../contexts/userContext";
 
 const API_URL = "http://10.37.118.75:6000";
 
@@ -12,11 +12,13 @@ export default function ChooseSubjectScreen() {
   if (!context) {
     throw new Error("UserProfile must be used within a UserProvider");
   }
+  const params = useLocalSearchParams();
+  const userParams = JSON.parse(params.user as string);
+  const userType = userParams.userType as "student" | "tutor";
 
   const handleSubjectChosen = async (subject: string) => {
     try {
       console.log(`Making API call to ${API_URL}/qas with subject: ${subject}`);
-      // Full URL
       const fullUrl = `${API_URL}/qas?subject=${subject}`;
       console.log(`Making API call to ${fullUrl}`);
 
@@ -35,23 +37,19 @@ export default function ChooseSubjectScreen() {
       console.log("Flask server response:", data);
       const writtenQuestions = data["written_questions"];
       const writtenAnswers = data["written_answers"];
-      console.log("written questions in choose: ", writtenQuestions);
-      console.log("written answers in choose: ", writtenAnswers);
 
-      const userType = "tutor"; // TODO: Replace with the actual user type
-      // Navigate based on user type
       if (userType === "tutor") {
         router.push({
-          pathname: "/onboarding/onboarding-test" as const,
+          pathname: "/onboarding/onboarding-test",
           params: {
             subject,
-            writtenQuestions,
-            writtenAnswers,
+            writtenQuestions: JSON.stringify(writtenQuestions),
+            writtenAnswers: JSON.stringify(writtenAnswers),
           },
         });
       } else {
         router.replace({
-          pathname: "/(tabs)/studentHome",
+          pathname: "/(tabs)/home",
           params: {
             subject,
             writtenQuestions,
