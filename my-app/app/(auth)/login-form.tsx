@@ -32,7 +32,8 @@ export default function LoginScreen() {
     }
   }, [userQuery]);
 
-  const handleLogin = () => {
+  const handleLogin = (email: string) => {
+    setEmail(email)
     setIsSubmitted(true);  // Trigger the query by marking the form as submitted
   };
 
