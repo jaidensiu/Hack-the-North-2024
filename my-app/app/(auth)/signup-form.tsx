@@ -1,13 +1,14 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { useRouter } from "expo-router";
-import SignupForm from "@/components/auth/SignupForm";
+import SignUpForm from "@/components/auth/SignupForm";
 
 export default function SignupFormScreen() {
   const router = useRouter();
 
-  const handleSignup = (data: {
-    name: string;
+  const handleSignUp = (data: {
+    firstName: string;
+    lastName: string;
     phoneNumber: string;
     email: string;
     age: string;
@@ -21,7 +22,7 @@ export default function SignupFormScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <SignupForm onSignup={handleSignup} onBack={() => router.back()} />
+      <SignUpForm onSignUp={handleSignUp} onBack={() => router.back()} />
     </SafeAreaView>
   );
 }

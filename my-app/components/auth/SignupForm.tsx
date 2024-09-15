@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
-import { RadioButton, TouchableRipple } from "react-native-paper";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 
-interface SignupFormProps {
-  onSignup: (data: {
-    name: string;
+interface SignUpFormProps {
+  onSignUp: (data: {
+    firstName: string;
+    lastName: string;
     phoneNumber: string;
     email: string;
     age: string;
@@ -18,16 +18,17 @@ interface SignupFormProps {
   onBack: () => void;
 }
 
-export default function SignupForm({ onSignup, onBack }: SignupFormProps) {
-  const [name, setName] = useState("");
+export default function SignUpForm({ onSignUp, onBack }: SignUpFormProps) {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState("18");
   const [gender, setGender] = useState("Male");
   const [userType, setUserType] = useState<"student" | "tutor">("student");
 
-  const handleSignup = () => {
-    onSignup({ name, phoneNumber, email, age, gender, userType });
+  const handleSignUp = () => {
+    onSignUp({ firstName, lastName, phoneNumber, email, age, gender, userType });
   };
 
   return (
@@ -40,37 +41,40 @@ export default function SignupForm({ onSignup, onBack }: SignupFormProps) {
         <View style={styles.placeholderIcon} />
       </View>
 
-      <View style={styles.form}>
-        <ThemedText style={styles.label}>Name*</ThemedText>
+      <ScrollView contentContainerStyle={styles.form}>
+        <ThemedText style={styles.label}>First Name</ThemedText>
         <TextInput
           style={styles.input}
-          value={name}
-          onChangeText={setName}
-          placeholder="Tanzim Kabir"
+          value={firstName}
+          onChangeText={setFirstName}
+          placeholder=""
         />
-
-        <ThemedText style={styles.label}>Phone no.*</ThemedText>
+        <ThemedText style={styles.label}>Last Name</ThemedText>
+        <TextInput
+          style={styles.input}
+          value={lastName}
+          onChangeText={setLastName}
+          placeholder=""
+        />
+        <ThemedText style={styles.label}>Phone Number</ThemedText>
         <View style={styles.phoneInput}>
-          <TextInput style={styles.countryCode} value="+880" editable={false} />
           <TextInput
             style={styles.phoneNumber}
             value={phoneNumber}
             onChangeText={setPhoneNumber}
-            placeholder="1710008927"
+            placeholder=""
             keyboardType="phone-pad"
           />
         </View>
-
         <ThemedText style={styles.label}>Email</ThemedText>
         <TextInput
           style={styles.input}
           value={email}
           onChangeText={setEmail}
-          placeholder="name@example.com"
+          placeholder=""
           keyboardType="email-address"
           autoCapitalize="none"
         />
-
         <View style={styles.row}>
           <View style={styles.halfWidth}>
             <ThemedText style={styles.label}>Age</ThemedText>
@@ -99,30 +103,33 @@ export default function SignupForm({ onSignup, onBack }: SignupFormProps) {
         </View>
 
         <ThemedText style={styles.label}>I am a:</ThemedText>
-        <RadioButton.Group
-          onValueChange={(value) => setUserType(value as "student" | "tutor")}
-          value={userType}
-        >
-          <View style={styles.radioGroup}>
-            <TouchableRipple onPress={() => setUserType("student")}>
-              <View style={styles.radioButton}>
-                <RadioButton value="student" />
-                <ThemedText>Student</ThemedText>
-              </View>
-            </TouchableRipple>
-            <TouchableRipple onPress={() => setUserType("tutor")}>
-              <View style={styles.radioButton}>
-                <RadioButton value="tutor" />
-                <ThemedText>Tutor</ThemedText>
-              </View>
-            </TouchableRipple>
-          </View>
-        </RadioButton.Group>
+        <View style={styles.radioGroup}>
+          <TouchableOpacity
+            style={[
+              styles.studentTutorToggler,
+              userType === "student" && styles.selected,
+            ]}
+            onPress={() => setUserType("student")}
+          >
+            <ThemedText>Student</ThemedText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.studentTutorToggler,
+              userType === "tutor" && styles.selected,
+            ]}
+            onPress={() => setUserType("tutor")}
+          >
+            <ThemedText>Tutor</ThemedText>
+          </TouchableOpacity>
+        </View>
 
-        <TouchableOpacity style={styles.button} onPress={handleSignup}>
-          <ThemedText style={styles.buttonText}>Submit</ThemedText>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+            <ThemedText style={styles.buttonText}>Submit</ThemedText>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </ThemedView>
   );
 }
@@ -132,104 +139,101 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    flex: 1,
-    padding: 20,
+    flex: 1, 
+    padding: 20, 
   },
   header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 20,
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    alignItems: "center", 
+    marginBottom: 20, 
   },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 20, 
+    fontWeight: "bold", 
   },
   placeholderIcon: {
-    width: 24,
-    height: 24,
+    width: 24, 
+    height: 24, 
   },
   form: {
-    flex: 1,
+    flexGrow: 1, 
   },
   label: {
-    fontSize: 14,
-    marginBottom: 5,
+    fontSize: 14, 
+    marginBottom: 4,
+    fontWeight: 'bold'
   },
   input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 15,
+    borderWidth: 1, 
+    borderColor: "#ccc", 
+    borderRadius: 4, 
+    padding: 8, 
+    marginBottom: 16, 
   },
   phoneInput: {
-    flexDirection: "row",
-    marginBottom: 15,
+    flexDirection: "row", marginBottom: 15,
   },
   countryCode: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    width: 60,
-    marginRight: 10,
+    borderWidth: 1, 
+    borderColor: "#ccc", 
+    borderRadius: 4, 
+    padding: 10, 
+    width: 64, 
+    marginRight: 8, 
   },
   phoneNumber: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
+    flex: 1, 
+    borderWidth: 1, 
+    borderColor: "#ccc", 
+    borderRadius: 4, 
+    padding: 8, 
   },
   row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "row", 
+    justifyContent: "space-between", 
     marginBottom: 15,
   },
   halfWidth: {
     width: "48%",
   },
   picker: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
+    borderWidth: 1, 
+    borderColor: "#ccc", 
+    borderRadius: 4,
+    backgroundColor: "#FFFFFF",
+  },
+  studentTutorToggler: {
+    padding: 10,
+    borderWidth: 1, 
+    borderColor: "transparent", 
+    borderRadius: 4,
+  },
+  selected: {
+    borderColor: "#44ba5d",
   },
   radioGroup: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginBottom: 15,
+    flexDirection: "row", 
+    justifyContent: "space-around", 
+    marginBottom: 8, 
   },
-  radioButton: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  radioCircle: {
-    height: 20,
-    width: 20,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "#000",
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 10,
-  },
-  radioCircleSelected: {
-    borderColor: "green",
-  },
-  radioLabel: {
-    fontSize: 16,
+  buttonContainer: {
+    flex: 1, 
+    justifyContent: "center", 
+    alignItems: "center", 
+    marginTop: 8, 
   },
   button: {
-    backgroundColor: "green",
-    padding: 15,
-    marginTop: 20,
-    borderRadius: 5,
-    alignItems: "center",
+    backgroundColor: "#44ba5d", 
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    borderRadius: 4, 
+    marginVertical: 8,
+    alignItems: "center", 
   },
   buttonText: {
-    color: "white",
-    fontSize: 16,
+    color: "white", 
+    fontSize: 16, 
     fontWeight: "bold",
   },
 });
