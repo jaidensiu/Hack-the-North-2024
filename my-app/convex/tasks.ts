@@ -2,6 +2,7 @@ import { query } from "./_generated/server";
 import { mutation } from "./_generated/server";
 import { v } from "convex/values";
 
+// Get all users
 export const get = query({
     args: {},
     handler: async (ctx) => {
@@ -9,6 +10,7 @@ export const get = query({
     },
 });
 
+// Get user based on email
 export const getUser = query({
     args: { email: v.string(), enabled: v.boolean() },
     handler: async (ctx, args) => {
@@ -24,6 +26,7 @@ export const getUser = query({
     },
 });
 
+// Get session based on ID
 export const updateUserSessionHistory = mutation({
     args: { id: v.id("users"), sessionHistory: v.array(v.id("sessions")) },
     handler: async (ctx, args) => {
@@ -80,6 +83,8 @@ export const createNewRequest = mutation({
     },
 });
 
+
+// Will write update function for request
 export const createNewSession = mutation({
     args: {
         studentID: v.id("users"),
