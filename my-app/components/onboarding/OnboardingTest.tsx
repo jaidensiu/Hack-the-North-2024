@@ -10,25 +10,27 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 
 interface OnboardingTestProps {
+  writtenQuestions: string[];
+  writtenAnswers: string[];
   onTestComplete: (score: number, totalQuestions: number) => void;
   onBack: () => void;
 }
 
-const mockQuestions = [
-  "What is 2 + 2?",
-  "Who wrote Romeo and Juliet?",
-  "What is the capital of France?",
-  "What is the chemical symbol for water?",
-  "In which year did World War II end?",
-];
+const API_URL = "http://10.37.118.75:6000";
 
 export default function OnboardingTest({
+  writtenQuestions,
+  writtenAnswers,
   onTestComplete,
   onBack,
 }: OnboardingTestProps) {
   const [answers, setAnswers] = useState<string[]>(
-    new Array(mockQuestions.length).fill("")
+    new Array(writtenAnswers.length).fill("")
   );
+
+  // print written questions and answers
+  console.log("written questions: ", writtenQuestions);
+  console.log("written answers: ", writtenAnswers);
 
   const handleAnswerChange = (index: number, answer: string) => {
     const newAnswers = [...answers];
@@ -36,11 +38,31 @@ export default function OnboardingTest({
     setAnswers(newAnswers);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // In a real application, you would evaluate the answers here
     // For this example, we'll just use a mock score
     const mockScore = 4;
-    onTestComplete(mockScore, mockQuestions.length);
+
+    // http fetch request to flask function and get back score
+    const fullUrl = `${API_URL}/score`;
+    const response = await fetch(fullUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        answer: writtenAnswers,
+        tutor_response: answers,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const responseText = await response.text();
+    console.log(responseText);
+
+    onTestComplete(1, 2); // TODO: Replace with actual score and total questions
   };
 
   return (
@@ -54,7 +76,7 @@ export default function OnboardingTest({
       </View>
 
       <ScrollView contentContainerStyle={styles.form}>
-        {mockQuestions.map((question, index) => (
+        {writtenQuestions.map((question, index) => (
           <View key={index} style={styles.questionContainer}>
             <ThemedText style={styles.question}>{question}</ThemedText>
             <TextInput
