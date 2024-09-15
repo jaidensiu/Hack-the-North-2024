@@ -22,6 +22,7 @@ export default function SignupFormScreen() {
     gender: string;
     userType: string;
     location: string;
+    password: string;
   }
   if (!context) {
     throw new Error("UserProfile must be used within a UserProvider");
@@ -37,6 +38,7 @@ export default function SignupFormScreen() {
     age,
     gender,
     userType,
+    password,
     location,
   }: SignUpData) => {
     console.log(
@@ -47,6 +49,7 @@ export default function SignupFormScreen() {
       age,
       gender,
       userType,
+      password,
       location
     );
     try {
@@ -60,6 +63,7 @@ export default function SignupFormScreen() {
         topic: "temporary",
         sessionHistory: [],
         overallRating: BigInt(0),
+        password: password,
         location: location,
       });
       setUserID(result); // Save result to the context

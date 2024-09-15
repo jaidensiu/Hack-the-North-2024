@@ -52,6 +52,16 @@ export const getUser = query({
     },
 });
 
+export const getTutorSessions = query({
+    args: { id: v.id("users") },
+    handler: async (ctx, args) => {
+        const id = args.id
+        return await ctx.db.query("sessions")
+            .filter((q) => q.eq(q.field("tutorID"), id)).collect();
+
+    },
+});
+
 // Adds a session to a student/tutors history
 // input: user id and array of sessions
 export const updateUserSessionHistory = mutation({
@@ -111,6 +121,7 @@ export const createNewUser = mutation({
         topic: v.string(),
         sessionHistory: v.array(v.id("sessions")),
         overallRating: v.int64(),
+        password: v.string(),
         location: v.string()
     },
     handler: async (ctx, args) => {
@@ -124,6 +135,7 @@ export const createNewUser = mutation({
             topic: args.topic,
             sessionHistory: [],
             overallRating: args.overallRating,
+            password: args.password,
             location: args.location
         });
         return userID;
@@ -160,7 +172,9 @@ export const createNewSession = mutation({
         studentsRating: v.int64(),
         tutorsFeedback: v.string(),
         tutorsAIFeedback: v.optional(v.string()),
-        tutorsRating: v.int64()
+        tutorsRating: v.int64(),
+        studentName: v.string(),
+        studentLastName: v.string()
     },
     handler: async (ctx, args) => {
         const sessionID = await ctx.db.insert("sessions", {
@@ -171,7 +185,9 @@ export const createNewSession = mutation({
             studentsRating: args.studentsRating,
             tutorsFeedback: args.tutorsFeedback,
             tutorsAIFeedback: args.tutorsAIFeedback ?? "",
-            tutorsRating: args.tutorsRating
+            tutorsRating: args.tutorsRating,
+            studentName: args.studentName,
+            studentLastName: args.studentLastName
         });
 
 
@@ -180,7 +196,7 @@ export const createNewSession = mutation({
 });
 
 export const updateSessionFeedback = mutation({
-    args: { id: v.id("sessions"), studentExercises: v.string(), tutorsAIFeedback: v.string()},
+    args: { id: v.id("sessions"), studentExercises: v.string(), tutorsAIFeedback: v.string() },
     handler: async (ctx, args) => {
         const id = args.id;
         const studentExercises = args.studentExercises;
