@@ -1,6 +1,7 @@
 // components/home/TutorHome.tsx
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
+import { router } from "expo-router";
 import ScrollView from "@/components/ScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -22,8 +23,7 @@ import avatar2 from "@/assets/images/kim.jpeg";
 
 export default function Tutor() {
   const [userType] = useState<"student" | "tutor">("tutor");
-
-  const users: User[] = [
+  const [users, setUsers] = useState<User[]>([
     {
       id: "1",
       name: "John Doe",
@@ -32,7 +32,7 @@ export default function Tutor() {
       distance: 5,
       rating: 4,
       avatar: avatar1,
-      aboutMe: "Im a passionate biology tutor with 5 years of experience.",
+      aboutMe: "I'm a passionate biology tutor with 5 years of experience.",
     },
     {
       id: "2",
@@ -44,16 +44,24 @@ export default function Tutor() {
       avatar: avatar2,
       aboutMe: "Math enthusiast here! I specialize in calculus and statistics.",
     },
-  ];
+  ]);
 
   const handleAccept = (id: string) => {
     console.log(`Accepted user with id: ${id}`);
-    // TODO: Implement accept logic
+    // Implement accept logic
+    const acceptedUser = users.find((user) => user.id === id);
+    if (acceptedUser) {
+      // You might want to update some state or make an API call here
+      // For example, you could mark the user as accepted in your backend
+      // Create a session between the tutor and the student. For the student
+    }
   };
 
   const handleReject = (id: string) => {
     console.log(`Rejected user with id: ${id}`);
-    // TODO: Implement reject logic
+    // Implement reject logic
+    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+    // You might want to make an API call here to update the rejected status in your backend
   };
 
   return (

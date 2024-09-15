@@ -18,41 +18,36 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [userId, setUserId] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const getUser = useQuery(api.users.getUser);
-  const createSession = useMutation(api.sessions.create);
-  const deleteSession = useMutation(api.sessions.delete);
-
-  useEffect(() => {
-    async function loadUser() {
-      const user = await getUser();
-      if (user) {
-        setUserId(user._id);
-      }
-      setIsLoading(false);
-    }
-    loadUser();
-  }, [getUser]);
-
-  const login = async (newUserId: string) => {
-    await createSession({ userId: newUserId });
-    setUserId(newUserId);
-  };
-
-  const logout = async () => {
-    if (userId) {
-      await deleteSession({ userId });
-    }
-    setUserId(null);
-  };
-
-  return (
-    <UserContext.Provider value={{ userId, isLoading, login, logout }}>
-      {children}
-    </UserContext.Provider>
-  );
+  // const [userId, setUserId] = useState<string | null>(null);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const getUser = useQuery(api.users.getUser);
+  // const createSession = useMutation(api.sessions.create);
+  // const deleteSession = useMutation(api.sessions.delete);
+  // useEffect(() => {
+  //   async function loadUser() {
+  //     const user = await getUser();
+  //     if (user) {
+  //       setUserId(user._id);
+  //     }
+  //     setIsLoading(false);
+  //   }
+  //   loadUser();
+  // }, [getUser]);
+  // const login = async (newUserId: string) => {
+  //   await createSession({ userId: newUserId });
+  //   setUserId(newUserId);
+  // };
+  // const logout = async () => {
+  //   if (userId) {
+  //     await deleteSession({ userId });
+  //   }
+  //   setUserId(null);
+  // };
+  // return (
+  //   <UserContext.Provider value={{ userId, isLoading, login, logout }}>
+  //     {children}
+  //   </UserContext.Provider>
+  // );
 }
 
 export function useUser() {

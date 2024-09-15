@@ -14,9 +14,20 @@ export default function SignupFormScreen() {
     gender: string;
     userType: "student" | "tutor";
   }) => {
-    console.log("Signup with:", data);
-    // HI KIM
-    router.replace("/(tabs)/studentHome");
+    // TODO: HI KIM
+
+    // Navigate to the appropriate home screen based on user type
+    if (data.userType === "student") {
+      router.replace({
+        pathname: "/(tabs)/studentHome",
+        params: { user: JSON.stringify(data) }, // TODO: Fix user interface
+      });
+    } else {
+      router.replace({
+        pathname: "/(tabs)/tutorHome",
+        params: { user: JSON.stringify(data) },
+      });
+    }
   };
 
   return (
