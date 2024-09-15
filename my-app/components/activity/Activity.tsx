@@ -13,26 +13,35 @@ export default function Activity() {
 
   const user = useQuery(api.tasks.getUser, {email: "bob.johnson@example.com", enabled: true})
   if (user) {
+    const topic = user.topic
     const getSessions = useQuery(api.tasks.getTutorSessions, {id: user._id})
-
+    
     return (      
-      <ThemedView>
         <FlatList
         data={getSessions}
         keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => (
-          <SessionCard name= {item.studentID} rating = {Number(item.studentsRating)} location= {"Waterloo"}></SessionCard>
-        )}
-      />
-
-      </ThemedView>
-  )} else {
-    return( <ThemedView>
-
-    </ThemedView>)
+          <SessionCard name= {item.studentID} rating = {Number(item.studentsRating)} topic = {topic} location= {"Waterloo"}></SessionCard>
+        )}/>)
   }
- }
 
-  // const studentNames: string[] = (sessions as Session[]).flatMap((session: Session) =>
-  //   session.studentExercises.map((student: Student) => student.name) // Explicitly type `session` and `student`
-  // );
+  // if (user) {
+  //   const getSessions = useQuery(api.tasks.getTutorSessions, {id: user._id})
+
+  //   return (      
+  //     <ThemedView>
+  //       {/* <FlatList
+  //       data={getSessions}
+  //       keyExtractor={(item) => item._id.toString()}
+  //       renderItem={({ item }) => (
+  //         <SessionCard name= {item.studentID} rating = {Number(item.studentsRating)} location= {"Waterloo"}></SessionCard>
+  //       )}
+  //     /> */}
+
+  //     </ThemedView>
+  // )} else {
+  //   return( <ThemedView>
+
+  //   </ThemedView>)
+  // }
+ }
