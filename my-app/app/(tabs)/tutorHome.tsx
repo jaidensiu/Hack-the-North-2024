@@ -48,10 +48,10 @@ export default function Tutor() {
       // Establish connection with the student through Convex backend
       // const sessionId = await establishConnection({ tutorId: "your-tutor-id", studentId: id });
       const sessionId = 1;
-      // router.replace({
-      //   pathname: "/recording/[sessionId]" as const,
-      //   params: { sessionId: sessionId.toString() },
-      // });
+      router.replace({
+        pathname: "../recording/[sessionId]" as const,
+        params: { sessionId: sessionId.toString() },
+      });
     } catch (error) {
       console.error("Failed to establish connection:", error);
       // Handle error (e.g., show an error message to the user)
