@@ -12,6 +12,7 @@ import { api } from "@/convex/_generated/api";
 import { UserContext } from '../contexts/userContext';
 
 
+
 export default function SignupFormScreen() {
   const router = useRouter();
   const context = useContext(UserContext);
@@ -22,6 +23,16 @@ export default function SignupFormScreen() {
   const [gender, setGender] = useState('Male');
   const [userType, setUserType] = useState<'student' | 'tutor'>('student');
 
+  interface SignupData {
+    name: string;
+    phoneNumber: string;
+    email: string;
+    age: number;
+    gender: string;
+    userType: string;
+  }
+
+
   if (!context) {
     throw new Error('UserProfile must be used within a UserProvider');
   }
@@ -29,7 +40,7 @@ export default function SignupFormScreen() {
   const createUser = useMutation(api.tasks.createNewUser);
 
 
-  const handleSignup = async () => {
+  const handleSignup = async ({ name, phoneNumber, email, age, gender, userType } : SignupData) => {
     console.log('Signup with:', name, phoneNumber, email, age, gender, userType);
     try {
       const result = await createUser({
@@ -38,7 +49,7 @@ export default function SignupFormScreen() {
         email: email,
         phoneNumber: phoneNumber,
         type: userType,
-        age: BigInt(14),
+        age: BigInt(age),
         topic: "temporary",
         sessionHistory: [],
         overallRating: BigInt(0),
