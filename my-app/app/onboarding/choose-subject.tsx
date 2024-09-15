@@ -49,7 +49,7 @@ export default function ChooseSubjectScreen() {
         });
       } else {
         router.replace({
-          pathname: "/(tabs)/studentHome",
+          pathname: "/(tabs)/home",
           params: {
             subject,
             writtenQuestions,

@@ -6,6 +6,7 @@ import SignupForm from "@/components/auth/SignupForm";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { UserContext } from "../contexts/userContext";
+import { PersonType } from "@/types/User";
 
 export default function SignupFormScreen() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function SignupFormScreen() {
   if (!context) {
     throw new Error("UserProfile must be used within a UserProvider");
   }
-  const { userID, setUserID } = context;
+  const { userID, setUserID, personType, setPersonType } = context;
   const createUser = useMutation(api.tasks.createNewUser);
 
   const handleSignUp = async ({
@@ -62,7 +63,9 @@ export default function SignupFormScreen() {
         location: location,
       });
       setUserID(result); // Save result to the context
+      setPersonType(userType as PersonType); // Save userType to the context
       console.log("User created:", result);
+      console.log("User type:", userType);
       if (userType === "student") {
         router.push({
           pathname: "/onboarding/choose-subject",

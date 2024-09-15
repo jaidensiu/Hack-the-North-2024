@@ -1,4 +1,3 @@
-// components/home/TutorHome.tsx
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { router } from "expo-router";
@@ -11,7 +10,7 @@ import { User } from "@/types/User";
 import avatar1 from "@/assets/images/kim.jpeg";
 import avatar2 from "@/assets/images/kim.jpeg";
 
-export default function Tutor() {
+export function TutorHome() {
   const [users, setUsers] = useState<User[]>([
     {
       id: "1",
@@ -41,20 +40,24 @@ export default function Tutor() {
     },
   ]);
 
-  const handleAccept = (id: string) => {
+  const handleAccept = async (id: string) => {
     console.log(`Accepted user with id: ${id}`);
-    // Implement accept logic
-    const acceptedUser = users.find((user) => user.id === id);
-    if (acceptedUser) {
-      // You might want to update some state or make an API call here
-      // For example, you could mark the user as accepted in your backend
-      // Create a session between the tutor and the student. For the student
+    try {
+      // Establish connection with the student through Convex backend
+      // const sessionId = await establishConnection({ tutorId: "your-tutor-id", studentId: id });
+      const sessionId = 1;
+      router.replace({
+        pathname: "../recording/[sessionId]" as const,
+        params: { sessionId: sessionId.toString() },
+      });
+    } catch (error) {
+      console.error("Failed to establish connection:", error);
+      // Handle error (e.g., show an error message to the user)
     }
   };
 
   const handleReject = (id: string) => {
     console.log(`Rejected user with id: ${id}`);
-    // Implement reject logic
     setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
     // You might want to make an API call here to update the rejected status in your backend
   };

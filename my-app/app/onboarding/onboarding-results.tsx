@@ -9,7 +9,7 @@ export default function OnboardingResultsScreen() {
 
   const handleFinish = () => {
     router.replace({
-      pathname: "/(tabs)/tutorHome" as const,
+      pathname: "/(tabs)/home" as const,
       params: { subject },
     });
   };
