@@ -1,18 +1,7 @@
 import React, { useState, useContext } from "react";
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
+import { SafeAreaView } from "react-native";
 import { useRouter } from "expo-router";
 import SignUpForm from "@/components/auth/SignupForm";
-import { Ionicons } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
-import { RadioButton, TouchableRipple } from "react-native-paper";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { UserContext } from "../contexts/userContext";
