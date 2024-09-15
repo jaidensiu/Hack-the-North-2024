@@ -54,7 +54,7 @@ const UserCard: React.FC<UserCardProps> = ({
                 {age} years old • {gender}
               </ThemedText>
               <ThemedText>{distance} km away</ThemedText>
-              {isTutor && (
+              {!isTutor && (
                 <View style={styles.ratingContainer}>
                   {[1, 2, 3, 4, 5].map((star) => (
                     <AntDesign
@@ -79,7 +79,7 @@ const UserCard: React.FC<UserCardProps> = ({
               <ThemedText style={styles.aboutMe}>{aboutMe}</ThemedText>
             </View>
           )}
-          {!isTutor && (
+          {isTutor && (
             <View style={styles.actionContainer}>
               <Pressable
                 onPress={() => onAccept && onAccept(id)}
