@@ -1,24 +1,32 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Image, Pressable, ImageSourcePropType } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import { ThemedText } from '@/components/ThemedText';
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Pressable,
+  ImageSourcePropType,
+} from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+import { ThemedText } from "@/components/ThemedText";
+import { User } from "@/types/User";
 
-interface UserCardProps {
-  id: string;
-  name: string;
-  age: number;
-  gender: string;
-  distance: number;
-  rating: number;
-  avatar: ImageSourcePropType;
-  isTutor: boolean;
-  aboutMe: string;
+interface UserCardProps extends User {
   onAccept?: (id: string) => void;
   onReject?: (id: string) => void;
 }
 
-const UserCard: React.FC<UserCardProps> = ({ 
-  id, name, age, gender, distance, rating, avatar, isTutor, aboutMe, onAccept, onReject 
+const UserCard: React.FC<UserCardProps> = ({
+  id,
+  name,
+  age,
+  gender,
+  distance,
+  rating,
+  avatar,
+  userType,
+  aboutMe,
+  onAccept,
+  onReject,
 }) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -26,30 +34,32 @@ const UserCard: React.FC<UserCardProps> = ({
     setExpanded(!expanded);
   };
 
+  const isTutor = userType === "tutor";
+
   return (
     <Pressable
       style={({ pressed }) => [
         styles.card,
-        { backgroundColor: pressed ? '#e6ffe6' : 'white' }
+        { backgroundColor: pressed ? "#e6ffe6" : "white" },
       ]}
       onPress={toggleExpand}
     >
       {({ pressed }) => (
         <>
           <View style={styles.topRow}>
-            {avatar && (
-              <Image source={avatar} style={styles.avatar} />
-            )}
+            {avatar && <Image source={avatar} style={styles.avatar} />}
             <View style={styles.infoContainer}>
               <ThemedText style={styles.name}>{name}</ThemedText>
-              <ThemedText>{age} years old • {gender}</ThemedText>
+              <ThemedText>
+                {age} years old • {gender}
+              </ThemedText>
               <ThemedText>{distance} km away</ThemedText>
               {isTutor && (
                 <View style={styles.ratingContainer}>
                   {[1, 2, 3, 4, 5].map((star) => (
                     <AntDesign
                       key={star}
-                      name={star <= rating ? 'star' : 'staro'}
+                      name={star <= rating ? "star" : "staro"}
                       size={16}
                       color="#FFD700"
                     />
@@ -57,11 +67,11 @@ const UserCard: React.FC<UserCardProps> = ({
                 </View>
               )}
             </View>
-            <AntDesign 
-              name={expanded ? 'up' : 'down'} 
-              size={24} 
+            <AntDesign
+              name={expanded ? "up" : "down"}
+              size={24}
               color="#888"
-              style={styles.expandIcon} 
+              style={styles.expandIcon}
             />
           </View>
           {expanded && (
@@ -71,20 +81,20 @@ const UserCard: React.FC<UserCardProps> = ({
           )}
           {!isTutor && (
             <View style={styles.actionContainer}>
-              <Pressable 
+              <Pressable
                 onPress={() => onAccept && onAccept(id)}
                 style={({ pressed }) => [
                   styles.actionButton,
-                  { backgroundColor: pressed ? '#e6ffe6' : 'transparent' }
+                  { backgroundColor: pressed ? "#e6ffe6" : "transparent" },
                 ]}
               >
                 <AntDesign name="check" size={24} color="green" />
               </Pressable>
-              <Pressable 
+              <Pressable
                 onPress={() => onReject && onReject(id)}
                 style={({ pressed }) => [
                   styles.actionButton,
-                  { backgroundColor: pressed ? '#ffe6e6' : 'transparent' }
+                  { backgroundColor: pressed ? "#ffe6e6" : "transparent" },
                 ]}
               >
                 <AntDesign name="close" size={24} color="red" />
@@ -101,18 +111,18 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 8,
     padding: 16,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     borderWidth: 1,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    marginBottom: 16
+    marginBottom: 16,
   },
   topRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   avatar: {
     width: 60,
@@ -124,16 +134,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   name: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 18,
     marginBottom: 4,
   },
   ratingContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 4,
   },
   expandIcon: {
-    marginLeft: 'auto',
+    marginLeft: "auto",
   },
   expandedContent: {
     marginTop: 12,
@@ -143,8 +153,8 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   actionContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    flexDirection: "row",
+    justifyContent: "flex-end",
     marginTop: 12,
   },
   actionButton: {

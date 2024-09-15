@@ -56,7 +56,18 @@ export default function SignupFormScreen() {
       });
       setUserID(result);  // Save the result to the state
       console.log('User created:', result);
-      router.replace('/(tabs)');
+      // Navigate to the appropriate home screen based on user type
+    if (userType === "student") {
+      router.replace({
+        pathname: "/(tabs)/studentHome",
+        params: { user: JSON.stringify({ name, phoneNumber, email, age, gender, userType }) }, // TODO: Fix user interface
+      });
+    } else {
+      router.replace({
+        pathname: "/(tabs)/tutorHome",
+        params: { user: JSON.stringify({ name, phoneNumber, email, age, gender, userType }) },
+      });
+    }
     } catch (error) {
       console.error('Error creating user:', error);
     }
