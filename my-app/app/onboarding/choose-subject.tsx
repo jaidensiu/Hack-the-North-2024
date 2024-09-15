@@ -13,32 +13,33 @@ export default function ChooseSubjectScreen() {
     throw new Error("UserProfile must be used within a UserProvider");
   }
   const params = useLocalSearchParams();
-  const userParams = JSON.parse(params.user as string);
-  const userType = userParams.userType as "student" | "tutor";
+  const userType = params.userType as "student" | "tutor";
 
   const handleSubjectChosen = async (subject: string) => {
-    try {
-      console.log(`Making API call to ${API_URL}/qas with subject: ${subject}`);
-      const fullUrl = `${API_URL}/qas?subject=${subject}`;
-      console.log(`Making API call to ${fullUrl}`);
+    if (userType === "tutor") {
+      try {
+        console.log(
+          `Making API call to ${API_URL}/qas with subject: ${subject}`
+        );
+        const fullUrl = `${API_URL}/qas?subject=${subject}`;
+        console.log(`Making API call to ${fullUrl}`);
 
-      const response = await fetch(fullUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+        const response = await fetch(fullUrl, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-      const data = await response.json();
-      console.log("Flask server response:", data);
-      const writtenQuestions = data["written_questions"];
-      const writtenAnswers = data["written_answers"];
+        const data = await response.json();
+        console.log("Flask server response:", data);
+        const writtenQuestions = data["written_questions"];
+        const writtenAnswers = data["written_answers"];
 
-      if (userType === "tutor") {
         router.push({
           pathname: "/onboarding/onboarding-test",
           params: {
@@ -47,18 +48,14 @@ export default function ChooseSubjectScreen() {
             writtenAnswers: JSON.stringify(writtenAnswers),
           },
         });
-      } else {
-        router.replace({
-          pathname: "/(tabs)/home",
-          params: {
-            subject,
-            writtenQuestions,
-            writtenAnswers,
-          },
-        });
+      } catch (error) {
+        console.error("Error updating subject:", error);
       }
-    } catch (error) {
-      console.error("Error updating subject:", error);
+    } else {
+      router.replace({
+        pathname: "/(tabs)/home",
+        params: { subject },
+      });
     }
   };
 

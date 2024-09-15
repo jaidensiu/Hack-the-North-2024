@@ -52,6 +52,17 @@ export const getUser = query({
     },
 });
 
+export const getUserFromID = query({
+    args: { id: v.id("users")},
+    handler: async (ctx, args) => {
+        const id = args.id
+        return await ctx.db.query("users")
+                .filter((q) => q.eq(q.field("_id"), id)).first();
+
+    },
+});
+
+
 export const getTutorSessions = query({
     args: { id: v.id("users") },
     handler: async (ctx, args) => {

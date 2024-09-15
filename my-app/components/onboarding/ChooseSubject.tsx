@@ -8,7 +8,12 @@ interface ChooseSubjectProps {
   onBack: () => void;
 }
 
-const subjects = ["Math", "Science", "History", "English", "Art", "Music"];
+const subjects = [
+  "Physics 11",
+  "Linear Algebra",
+  "Organic Chemistry",
+  "Japanese",
+];
 
 export default function ChooseSubject({
   onSubjectChosen,

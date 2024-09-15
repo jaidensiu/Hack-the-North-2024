@@ -1,7 +1,7 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { ThemedView } from '@/components/ThemedView';
-import { ThemedText } from '@/components/ThemedText';
+import React from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/components/ThemedText";
 
 interface ProfileCardProps {
   title: string;
@@ -13,18 +13,20 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ title, value, onPress }) => {
   return (
     <TouchableOpacity onPress={() => onPress?.(title, value)}>
       <ThemedView style={styles.card}>
-        <ThemedText type="subtitle" style={styles.title}>{title}</ThemedText>
+        <ThemedText type="subtitle" style={styles.title}>
+          {title}
+        </ThemedText>
         <ThemedText>{value}</ThemedText>
       </ThemedView>
     </TouchableOpacity>
   );
-}
+};
 
 const styles = StyleSheet.create({
   card: {
     borderRadius: 8,
     padding: 16,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     borderWidth: 1,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },

@@ -5,14 +5,12 @@ import LoginForm from "@/components/auth/LoginForm";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { UserContext } from "../contexts/userContext";
+import { PersonType } from "@/types/User";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false); // State to track form submission
-  // const [userID, setUserID] = useState<string | null>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const router = useRouter();
   const context = useContext(UserContext);
 
@@ -20,36 +18,39 @@ export default function LoginScreen() {
     throw new Error("UserProfile must be used within a UserProvider");
   }
 
-  const { userID, setUserID, personType, setPersonType } = context;
+  const { setUserID, setPersonType } = context;
 
-  // Trigger query only after submission
   const userQuery = useQuery(api.tasks.getUser, {
-    email: email,
+    email,
     enabled: isSubmitted,
   });
 
   useEffect(() => {
-    if (userQuery) {
-      if (userQuery.password == password) {
-        setUserID(userQuery?._id); // Set the retrieved user ID after query resolves
+    if (userQuery && isSubmitted) {
+      if (userQuery.password === password) {
+        // Note: Compare passwords on server-side in production
+        setUserID(userQuery._id);
+        setPersonType(userQuery.type as PersonType);
         console.log("Retrieved user:", userQuery);
+        // push with params
+        router.push({
+          pathname: "/(tabs)/home",
+          params: {
+            userType: userQuery.type,
+          },
+        });
+      } else {
+        console.error("Incorrect password");
       }
+      setIsSubmitted(false); // Reset submission state
     }
-  }, [userQuery]);
+  }, [userQuery, isSubmitted]);
 
   const handleLogin = (email: string, password: string) => {
     setEmail(email);
     setPassword(password);
-    setIsSubmitted(true); // Trigger the query by marking the form as submitted
+    setIsSubmitted(true);
   };
-
-  useEffect(() => {
-    setPersonType("student");
-    if (userID) {
-      console.log(userID);
-      router.push("/onboarding/choose-subject"); // Navigate to the next screen once the user ID is set
-    }
-  }, [userID, personType]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

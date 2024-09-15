@@ -1,14 +1,9 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Image,
-  Pressable,
-  ImageSourcePropType,
-} from "react-native";
+import React, { useState, useContext } from "react";
+import { StyleSheet, View, Image, Pressable } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { ThemedText } from "@/components/ThemedText";
 import { User } from "@/types/User";
+import { UserContext } from "../../app/contexts/userContext";
 
 interface UserCardProps extends User {
   onAccept?: (id: string) => void;
@@ -36,7 +31,13 @@ const UserCard: React.FC<UserCardProps> = ({
     setExpanded(!expanded);
   };
 
-  const isTutor = userType === "tutor";
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("UserCard must be used within a UserProvider");
+  }
+  const { personType } = context;
+
+  const isTutor = personType === "tutor";
 
   return (
     <Pressable
@@ -56,7 +57,7 @@ const UserCard: React.FC<UserCardProps> = ({
                 {age} years old • {gender}
               </ThemedText>
               <ThemedText>{distance} km away</ThemedText>
-              {isTutor && (
+              {!isTutor && (
                 <View style={styles.ratingContainer}>
                   {[1, 2, 3, 4, 5].map((star) => (
                     <AntDesign
@@ -81,7 +82,7 @@ const UserCard: React.FC<UserCardProps> = ({
               <ThemedText style={styles.aboutMe}>{aboutMe}</ThemedText>
             </View>
           )}
-          {!isTutor && (
+          {isTutor && (
             <View style={styles.actionContainer}>
               <Pressable
                 onPress={() => onAccept && onAccept(id)}
@@ -103,7 +104,7 @@ const UserCard: React.FC<UserCardProps> = ({
               </Pressable>
             </View>
           )}
-          {isTutor && (
+          {!isTutor && (
             <View style={styles.actionContainer}>
               <Pressable
                 onPress={() => onRequest && onRequest(id)}

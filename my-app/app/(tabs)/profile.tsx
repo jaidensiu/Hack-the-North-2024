@@ -1,44 +1,33 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, View, Modal, TextInput, Button, Text } from "react-native";
 import ScrollView from "@/components/ScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import ProfileCard from "@/components/profile/ProfileCard";
+import { api } from "@/convex/_generated/api";
+import { UserContext } from "../contexts/userContext";
+import { useQuery } from "convex/react";
 
-interface ProfileScreenProps {
-  name: string;
-  role: string;
-  rating: number;
-  rate: string;
-  phone: string;
-  email: string;
-  description: string;
-}
-
-const ProfileScreen: React.FC<ProfileScreenProps> = ({
-  name,
-  role,
-  rating,
-  rate,
-  phone,
-  email,
-  description,
-}) => {
-  // TODO: use the arguments below in the useState
-  const [user, setUser] = useState({
-    name: "Franklin Ma",
-    role: "Tutor",
-    rating: 4.9,
-    rate: "$40/hr",
-    phone: "123-456-7890",
-    email: "franklinma@gmail.com",
-    description:
-      "Hi there, my name is Franklin, my goal as a tutor is to make you smarter.",
-  });
+const ProfileScreen: React.FC = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("ProfileScreen must be used within a UserProvider");
+  }
+  const { userID } = context;
+  if (!userID) {
+    return null;
+  }
+  const user = useQuery(api.tasks.getUserFromID, { id: userID });
 
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedField, setSelectedField] = useState<string | null>(null);
   const [inputValue, setInputValue] = useState<string | number>("");
+
+  if (!user) {
+    return null;
+  }
+
+  const name = user.firstName + " " + user.lastName;
 
   const handleCardPress = (field: string, currentValue: string | number) => {
     if (field === "Rating") return;
@@ -50,11 +39,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
 
   const handleSave = () => {
     if (selectedField !== null) {
-      const updatedValue = inputValue;
-      setUser((prevState) => ({
-        ...prevState,
-        [selectedField.toLowerCase()]: updatedValue,
-      }));
+      // TODO: Implement save functionality with Convex mutation
       setModalVisible(false);
     }
   };
@@ -65,13 +50,12 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
         <ThemedText type="title">Your Profile</ThemedText>
       </ThemedView>
       <ScrollView headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}>
-        <ProfileCard title="Name" value={user.name} onPress={handleCardPress} />
-        <ProfileCard title="Role" value={user.role} onPress={handleCardPress} />
-        <ProfileCard title="Rating" value={user.rating} />
-        <ProfileCard title="Rate" value={user.rate} onPress={handleCardPress} />
+        <ProfileCard title="Name" value={name} onPress={handleCardPress} />
+        <ProfileCard title="Role" value={user.type} onPress={handleCardPress} />
+        <ProfileCard title="Rating" value={Number(user.overallRating)} />
         <ProfileCard
           title="Phone"
-          value={user.phone}
+          value={user.phoneNumber}
           onPress={handleCardPress}
         />
         <ProfileCard
@@ -81,7 +65,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
         />
         <ProfileCard
           title="Description"
-          value={user.description}
+          value="Hi there, I love teaching and meeting new people. It is one of the best joys of the world!"
           onPress={handleCardPress}
         />
       </ScrollView>
@@ -136,7 +120,7 @@ const styles = StyleSheet.create({
       height: 2,
     },
     shadowOpacity: 0.25,
-    shadowRadius: 4,
+    shadowRadius: 3.84,
     elevation: 5,
   },
   input: {

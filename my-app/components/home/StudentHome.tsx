@@ -1,67 +1,34 @@
 import React, { useState, useCallback } from "react";
 import { StyleSheet, TextInput, FlatList, View, Alert } from "react-native";
+import { useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import UserCard from "./UserCard";
 import SubjectPicker from "@/components/SubjectPicker";
 
-import avatar1 from "@/assets/images/kim.jpeg";
-import avatar2 from "@/assets/images/kim.jpeg";
-
 const dropdownOptions = [
   { label: "Physics 11", value: "physics11" },
-  { label: "Biology 11", value: "biology11" },
-  { label: "Physics 12", value: "physics12" },
-  { label: "Biology 12", value: "biology12" },
-]; // TODO: Replace with actual subjects later
-
-const dummyTutors = [
-  {
-    id: "1",
-    name: "John Doe",
-    phoneNumber: "123-456-7890",
-    email: "john@example.com",
-    age: 25,
-    gender: "Male",
-    userType: "tutor" as const,
-    distance: 5,
-    rating: 4,
-    avatar: avatar1,
-    aboutMe: "Experienced Physics tutor with a passion for teaching.",
-    topic: "physics11",
-  },
-  {
-    id: "2",
-    name: "Jane Smith",
-    phoneNumber: "098-765-4321",
-    email: "jane@example.com",
-    age: 28,
-    gender: "Female",
-    userType: "tutor" as const,
-    distance: 3,
-    rating: 5,
-    avatar: avatar2,
-    aboutMe: "Biology specialist with 5 years of tutoring experience.",
-    topic: "biology12",
-  },
+  { label: "Linear Algebra", value: "linearalgebra" },
+  { label: "Organic Chemistry", value: "organicchemistry" },
+  { label: "Japanese", value: "japanese" },
 ];
+
+import owlAvatar from "@/assets/images/owl.png";
 
 export function StudentHome() {
   const [location, setLocation] = useState("Address");
   const [selectedSubject, setSelectedSubject] = useState("");
 
-  const filteredTutors = useCallback(() => {
-    return dummyTutors.filter(
-      (tutor) => !selectedSubject || tutor.topic === selectedSubject
-    );
-  }, [selectedSubject]);
+  // Use the Convex query to fetch tutors
+  const tutors = useQuery(api.tasks.getTutors, { topic: selectedSubject });
 
   const handleRequest = (id: string) => {
-    const tutor = dummyTutors.find((t) => t.id === id);
+    const tutor = tutors?.find((t) => t._id === id);
     if (tutor) {
       Alert.alert(
         "Request Sent",
-        `Your request has been sent to ${tutor.name}. They will contact you soon.`,
+        `Your request has been sent to ${tutor.firstName} ${tutor.lastName}. They will contact you soon.`,
         [{ text: "OK" }]
       );
     }
@@ -88,21 +55,21 @@ export function StudentHome() {
   return (
     <ThemedView style={styles.container}>
       <FlatList
-        data={filteredTutors()}
-        keyExtractor={(item) => item.id.toString()}
+        data={tutors}
+        keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => (
           <UserCard
-            id={item.id}
-            name={item.name}
-            age={item.age}
-            distance={item.distance}
-            rating={item.rating}
+            id={item._id}
+            name={`${item.firstName} ${item.lastName}`}
+            age={Number(item.age)}
+            distance={0} // You might need to calculate this based on user's location
+            rating={Number(item.overallRating)}
             phoneNumber={item.phoneNumber}
             email={item.email}
-            gender={item.gender}
-            userType={item.userType}
-            aboutMe={item.aboutMe}
-            avatar={item.avatar}
+            gender="" // Add this field to your user schema if needed
+            userType={item.type as "tutor" | "student"}
+            aboutMe="" // Add this field to your user schema if needed
+            avatar={owlAvatar} // You might need to handle avatar differently
             onRequest={handleRequest}
           />
         )}
