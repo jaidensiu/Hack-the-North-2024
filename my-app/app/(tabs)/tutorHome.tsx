@@ -49,7 +49,7 @@ export default function Tutor() {
       // const sessionId = await establishConnection({ tutorId: "your-tutor-id", studentId: id });
       const sessionId = 1;
       router.replace({
-        pathname: "/recording/[sessionId]" as const,
+        pathname: "../recording/[sessionId]" as const,
         params: { sessionId: sessionId.toString() },
       });
     } catch (error) {

@@ -11,7 +11,7 @@ interface SignupFormProps {
     name: string;
     phoneNumber: string;
     email: string;
-    age: string;
+    age: number;
     gender: string;
     userType: "student" | "tutor";
   }) => void;
@@ -22,7 +22,7 @@ export default function SignupForm({ onSignup, onBack }: SignupFormProps) {
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [age, setAge] = useState("18");
+  const [age, setAge] = useState(18);
   const [gender, setGender] = useState("Male");
   const [userType, setUserType] = useState<"student" | "tutor">("student");
 

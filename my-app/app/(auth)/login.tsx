@@ -5,6 +5,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 import SuberTuderIcon from '@/assets/images/home_icon.jpg';
+import {useState} from "react"
 
 export default function AuthLandingScreen() {
   const router = useRouter();

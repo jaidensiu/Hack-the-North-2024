@@ -1,33 +1,79 @@
-import React from "react";
-import { SafeAreaView } from "react-native";
+import React, { useState, useContext } from "react";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
+import { RadioButton, TouchableRipple } from "react-native-paper";
 import SignupForm from "@/components/auth/SignupForm";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { UserContext } from '../contexts/userContext';
+
+
 
 export default function SignupFormScreen() {
   const router = useRouter();
+  const context = useContext(UserContext);
+  const [name, setName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [age, setAge] = useState('18');
+  const [gender, setGender] = useState('Male');
+  const [userType, setUserType] = useState<'student' | 'tutor'>('student');
 
-  const handleSignup = (data: {
+  interface SignupData {
     name: string;
     phoneNumber: string;
     email: string;
-    age: string;
+    age: number;
     gender: string;
-    userType: "student" | "tutor";
-  }) => {
-    // TODO: HI KIM
+    userType: string;
+  }
+  if (!context) {
+    throw new Error('UserProfile must be used within a UserProvider');
+  }
+  const { userID, setUserID } = context;
+  const createUser = useMutation(api.tasks.createNewUser);
 
-    // Navigate to the appropriate home screen based on user type
-    if (data.userType === "student") {
+  const handleSignup = async ({ name, phoneNumber, email, age, gender, userType } : SignupData) => {
+    console.log('Signup with:', name, phoneNumber, email, age, gender, userType);
+    try {
+      const result = await createUser({
+        firstName: name,
+        lastName: "user",
+        email: email,
+        phoneNumber: phoneNumber,
+        type: userType,
+        age: BigInt(age),
+        topic: "temporary",
+        sessionHistory: [],
+        overallRating: BigInt(0),
+      });
+      setUserID(result);  // Save the result to the state
+      console.log('User created:', result);
+      // Navigate to the appropriate home screen based on user type
+    if (userType === "student") {
       router.replace({
         pathname: "/(tabs)/studentHome",
-        params: { user: JSON.stringify(data) }, // TODO: Fix user interface
+        params: { user: JSON.stringify({ name, phoneNumber, email, age, gender, userType }) }, // TODO: Fix user interface
       });
     } else {
       router.replace({
         pathname: "/(tabs)/tutorHome",
-        params: { user: JSON.stringify(data) },
+        params: { user: JSON.stringify({ name, phoneNumber, email, age, gender, userType }) },
       });
-    }
+    }}
+    catch (error) {
+      console.error('Error creating user:', error);
+        }
   };
 
   return (
