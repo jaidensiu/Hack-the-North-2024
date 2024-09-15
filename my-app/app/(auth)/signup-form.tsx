@@ -78,7 +78,7 @@ export default function SignupFormScreen() {
       // Navigate to the appropriate home screen based on user type
       if (userType === "student") {
         router.replace({
-          pathname: "/(tabs)/studentHome",
+          pathname: "/onboarding/choose-subject",
           params: {
             user: JSON.stringify({
               name,
@@ -92,7 +92,7 @@ export default function SignupFormScreen() {
         });
       } else {
         router.replace({
-          pathname: "/(tabs)/tutorHome",
+          pathname: "/onboarding/choose-subject" as const,
           params: {
             user: JSON.stringify({
               name,
