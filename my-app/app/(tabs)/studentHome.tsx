@@ -1,17 +1,16 @@
-// app/(tabs)/tutorHome.tsx
 import React from "react";
 import { StyleSheet } from "react-native";
-import TutorHome from "@/components/home/TutorHome";
+import { StudentHome } from "@/components/home/StudentHome";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 
-export default function TutorHomeScreen() {
+export default function HomeScreen() {
   return (
     <>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">SuberTuder</ThemedText>
       </ThemedView>
-      <TutorHome />
+      <StudentHome />
     </>
   );
 }
