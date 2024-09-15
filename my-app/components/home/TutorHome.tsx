@@ -6,29 +6,21 @@ import ScrollView from "@/components/ScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import UserCard from "@/components/home/UserCard";
-
-interface User {
-  id: string;
-  name: string;
-  age: number;
-  gender: string;
-  distance: number;
-  rating: number;
-  avatar: any;
-  aboutMe: string;
-}
+import { User } from "@/types/User";
 
 import avatar1 from "@/assets/images/kim.jpeg";
 import avatar2 from "@/assets/images/kim.jpeg";
 
 export default function Tutor() {
-  const [userType] = useState<"student" | "tutor">("tutor");
   const [users, setUsers] = useState<User[]>([
     {
       id: "1",
       name: "John Doe",
+      phoneNumber: "123-456-7890",
+      email: "johndoe@gmail.com",
       age: 25,
       gender: "Male",
+      userType: "tutor",
       distance: 5,
       rating: 4,
       avatar: avatar1,
@@ -37,8 +29,11 @@ export default function Tutor() {
     {
       id: "2",
       name: "Jane Smith",
+      phoneNumber: "123-456-7890",
+      email: "janesmith@gmail.com",
       age: 30,
       gender: "Female",
+      userType: "tutor",
       distance: 3,
       rating: 5,
       avatar: avatar2,
@@ -74,7 +69,6 @@ export default function Tutor() {
           <UserCard
             key={user.id}
             {...user}
-            isTutor={userType === "student"}
             onAccept={handleAccept}
             onReject={handleReject}
           />
