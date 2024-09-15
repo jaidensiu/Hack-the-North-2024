@@ -1,6 +1,6 @@
 import React from "react";
 import ScrollView from "@/components/ScrollView";
-import DropdownComponent from "@/components/Dropdown";
+import SubjectPicker from "@/components/SubjectPicker";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components//ThemedView";
 
@@ -16,7 +16,7 @@ export function StudentHome() {
     <ScrollView headerBackgroundColor={{ light: "#A1CEDC", dark: "#A1CEDC" }}>
       <ThemedView>
         <ThemedText type="subtitle">Subject</ThemedText>
-        <DropdownComponent label="" options={dropdownOptions} />
+        <SubjectPicker options={dropdownOptions} />
         <ThemedText>item0</ThemedText>
         <ThemedText>item1</ThemedText>
         <ThemedText>item2</ThemedText>

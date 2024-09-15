@@ -25,6 +25,7 @@ const SubjectPicker: React.FC<DropdownProps> = ({ options }) => {
       </TouchableOpacity>
 
       <Modal
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(!modalVisible)}>
