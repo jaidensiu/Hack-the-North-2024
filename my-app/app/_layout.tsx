@@ -5,6 +5,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { UserProvider } from './contexts/userContext';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -29,13 +30,15 @@ export default function RootLayout() {
   }
 
   return (
+    <UserProvider>
     <ThemeProvider value={DefaultTheme}>
       <ConvexProvider client={convex}>
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="(tabs)" />
-            <Stack.Screen name="+not-found" />
-          </Stack>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="+not-found" />
+        </Stack>
       </ConvexProvider>
     </ThemeProvider>
+    </UserProvider>
   );
 }

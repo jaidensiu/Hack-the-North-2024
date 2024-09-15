@@ -10,11 +10,17 @@ export const get = query({
 });
 
 export const getUser = query({
-    args: { email: v.string() },
+    args: { email: v.string(), enabled: v.boolean() },
     handler: async (ctx, args) => {
         const email = args.email
-        return await ctx.db.query("users")
-            .filter((q) => q.eq(q.field("email"), email)).first();
+        const enabled = args.enabled
+        if (enabled) {
+            return await ctx.db.query("users")
+                .filter((q) => q.eq(q.field("email"), email)).first();
+        } else {
+            return null;
+        }
+
     },
 });
 
