@@ -2,6 +2,7 @@ import { query } from "./_generated/server";
 import { mutation } from "./_generated/server";
 import { v } from "convex/values";
 
+// Get all users
 export const get = query({
     args: {},
     handler: async (ctx) => {
@@ -9,6 +10,7 @@ export const get = query({
     },
 });
 
+// Get user based on email
 export const getUser = query({
     args: { email: v.string(), enabled: v.boolean() },
     handler: async (ctx, args) => {
@@ -24,6 +26,7 @@ export const getUser = query({
     },
 });
 
+// Get session based on ID
 export const updateUserSessionHistory = mutation({
     args: { id: v.id("users"), sessionHistory: v.array(v.id("sessions")) },
     handler: async (ctx, args) => {
@@ -80,13 +83,17 @@ export const createNewRequest = mutation({
     },
 });
 
+
+// Will write update function for request
 export const createNewSession = mutation({
     args: {
         studentID: v.id("users"),
         tutorID: v.id("users"),
         studentsFeedback: v.string(),
+        studentExercises: v.optional(v.string()),
         studentsRating: v.int64(),
         tutorsFeedback: v.string(),
+        tutorsAIFeedback: v.optional(v.string()),
         tutorsRating: v.int64()
     },
     handler: async (ctx, args) => {
@@ -94,12 +101,24 @@ export const createNewSession = mutation({
             studentID: args.studentID,
             tutorID: args.tutorID,
             studentsFeedback: args.studentsFeedback,
+            studentExercises: args.studentExercises ?? "",
             studentsRating: args.studentsRating,
             tutorsFeedback: args.tutorsFeedback,
+            tutorsAIFeedback: args.tutorsAIFeedback ?? "",
             tutorsRating: args.tutorsRating
         });
 
 
         return sessionID;
+    },
+});
+
+export const updateSessionFeedback = mutation({
+    args: { id: v.id("sessions"), studentExercises: v.string(), tutorsAIFeedback: v.string()},
+    handler: async (ctx, args) => {
+        const id = args.id;
+        const studentExercises = args.studentExercises;
+        const tutorsAIFeedback = args.tutorsAIFeedback;
+        await ctx.db.patch(id, { studentExercises: studentExercises, tutorsAIFeedback: tutorsAIFeedback });
     },
 });

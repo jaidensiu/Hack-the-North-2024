@@ -15,6 +15,8 @@ interface UserCardProps extends User {
   onReject?: (id: string) => void;
 }
 
+// don't have bio, gender, image, location
+
 const UserCard: React.FC<UserCardProps> = ({
   id,
   name,
