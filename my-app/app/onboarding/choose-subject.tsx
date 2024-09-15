@@ -35,18 +35,16 @@ export default function ChooseSubjectScreen() {
       console.log("Flask server response:", data);
       const writtenQuestions = data["written_questions"];
       const writtenAnswers = data["written_answers"];
-      console.log("written questions in choose: ", writtenQuestions);
-      console.log("written answers in choose: ", writtenAnswers);
 
       const userType = "tutor"; // TODO: Replace with the actual user type
       // Navigate based on user type
       if (userType === "tutor") {
         router.push({
-          pathname: "/onboarding/onboarding-test" as const,
+          pathname: "/onboarding/onboarding-test",
           params: {
             subject,
-            writtenQuestions,
-            writtenAnswers,
+            writtenQuestions: JSON.stringify(writtenQuestions),
+            writtenAnswers: JSON.stringify(writtenAnswers),
           },
         });
       } else {

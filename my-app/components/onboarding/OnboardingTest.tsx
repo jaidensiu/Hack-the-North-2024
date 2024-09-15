@@ -39,30 +39,32 @@ export default function OnboardingTest({
   };
 
   const handleSubmit = async () => {
-    // In a real application, you would evaluate the answers here
-    // For this example, we'll just use a mock score
-    const mockScore = 4;
+    try {
+      const fullUrl = `${API_URL}/score`;
+      const response = await fetch(fullUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          answer: writtenAnswers,
+          tutor_response: answers,
+        }),
+      });
 
-    // http fetch request to flask function and get back score
-    const fullUrl = `${API_URL}/score`;
-    const response = await fetch(fullUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        answer: writtenAnswers,
-        tutor_response: answers,
-      }),
-    });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const resultScore = await response.text();
+      // convert string to number
+      // if
+      const responseText = parseInt(resultScore, 10);
+      console.log("Got score?", responseText);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      onTestComplete(responseText, writtenAnswers.length); // TODO: Replace with actual score and total questions
+    } catch (error) {
+      console.error("Error submitting test:", error);
     }
-    const responseText = await response.text();
-    console.log(responseText);
-
-    onTestComplete(2, 2); // TODO: Replace with actual score and total questions
   };
 
   return (
