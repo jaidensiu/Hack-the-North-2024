@@ -8,8 +8,8 @@ export default function Convex() {
   const createUser = useMutation(api.tasks.createNewUser);
   const createSession = useMutation(api.tasks.createNewSession);
   const updateSessionHistory = useMutation(api.tasks.updateUserSessionHistory);
-  const student = useQuery(api.tasks.getUser, {email: 'olivia.harris@example.com'})
-  const tutor = useQuery(api.tasks.getUser, {email: 'nate.white@example.com'})
+  const student = useQuery(api.tasks.getUser, {email: 'olivia.harris@example.com', enabled: true})
+  const tutor = useQuery(api.tasks.getUser, {email: 'nate.white@example.com', enabled: true})
   const [userID, setUSerID] = useState("");  // State to store the result
   const [currentSession, setCurrentSession] = useState("");  // State to store the result
 

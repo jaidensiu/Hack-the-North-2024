@@ -5,7 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { ConvexProvider, ConvexReactClient } from "convex/react";
-
+import { UserProvider } from './contexts/userContext';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -32,6 +32,7 @@ export default function RootLayout() {
 });
 
   return (
+    <UserProvider>
     <ThemeProvider value={DefaultTheme}>
       <ConvexProvider client={convex}>
       <Stack screenOptions={{ headerShown: false }}>
@@ -40,5 +41,6 @@ export default function RootLayout() {
         </Stack>
       </ConvexProvider>
     </ThemeProvider>
+    </UserProvider>
   );
 }
