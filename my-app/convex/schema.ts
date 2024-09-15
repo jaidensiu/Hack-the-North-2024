@@ -12,6 +12,7 @@ export default defineSchema({
         topic: v.string(),
         sessionHistory: v.array(v.id("sessions")),
         overallRating: v.int64(),
+        password: v.string(),
         location: v.optional(v.string())
     }),
     profile: defineTable({
@@ -34,6 +35,8 @@ export default defineSchema({
         tutorsFeedback: v.string(),
         tutorsAIFeedback: v.optional(v.string()),
         tutorsRating: v.int64(),
+        studentName: v.string(),
+        studentLastName: v.string()
     }).index('studentID', ['studentID'])
     ,
     requests: defineTable({
