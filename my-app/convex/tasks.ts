@@ -10,6 +10,18 @@ export const get = query({
     },
 });
 
+export const getTutors = query({
+    args: { topic: v.string() },
+    handler: async (ctx, args) => {
+        const type = "tutor"
+        const topic = args.topic
+        return await ctx.db.query("users")
+            // .filter((q) => q.eq(q.field("topic"), topic))
+            .filter((q) => q.eq(q.field("type"), type)).collect();
+
+    },
+});
+
 // For login buttion
 // input: email string and whether or not the login button has been pressed yet
 // output: 1 user object that matches the email string
