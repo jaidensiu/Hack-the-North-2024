@@ -12,6 +12,7 @@ export default function HomeScreen() {
     throw new Error("UserProfile must be used within a UserProvider");
   }
   const { personType } = context;
+  console.log("Person type:", personType);
 
   return (
     <>

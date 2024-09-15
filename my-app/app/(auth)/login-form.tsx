@@ -8,8 +8,7 @@ import { UserContext } from "../contexts/userContext";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false); // State to track form submission
-  // const [userID, setUserID] = useState<string | null>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const router = useRouter();
   const context = useContext(UserContext);
 
@@ -17,7 +16,7 @@ export default function LoginScreen() {
     throw new Error("UserProfile must be used within a UserProvider");
   }
 
-  const { userID, setUserID } = context;
+  const { userID, setUserID, personType, setPersonType } = context;
 
   // Trigger query only after submission
   const userQuery = useQuery(api.tasks.getUser, {
@@ -27,7 +26,8 @@ export default function LoginScreen() {
 
   useEffect(() => {
     if (userQuery) {
-      setUserID(userQuery?._id); // Set the retrieved user ID after query resolves
+      setUserID(userQuery?._id);
+
       console.log("Retrieved user:", userQuery);
     }
   }, [userQuery]);
@@ -35,15 +35,17 @@ export default function LoginScreen() {
   const handleLogin = (email: string) => {
     console.log("Logging in with email:", email);
     setEmail(email);
-    setIsSubmitted(true); // Trigger the query by marking the form as submitted
+
+    setIsSubmitted(true);
   };
 
   useEffect(() => {
+    setPersonType("student");
     if (userID) {
       console.log(userID);
-      router.replace("/(tabs)"); // Navigate to the next screen once the user ID is set
+      router.replace("/(tabs)/home");
     }
-  }, [userID]);
+  }, [userID, personType]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
