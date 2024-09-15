@@ -40,7 +40,7 @@ def ask_cohere(subject):
     print(f"Calling cohere to generate questions for: {subject}")
     response = co.chat(
   model="command-r",
-  message=f"""Generate 20 multiple-choice questions and 2 written-response questions related to {subject}, using the provided documents as reference. Follow this format:
+  message=f"""Generate 20 multiple-choice questions and 4 written-response questions related to {subject}, using the provided documents as reference. Follow this format:
 For each multiple-choice question:
 Q1: [Question text]
 Choices:
@@ -55,9 +55,9 @@ Repeat this for Q1 to Q20.
 For the written-response questions:
 Written Question 1: [Question text]
 Written Response 1: [Sample answer or guidelines for the response]
-
-Written Question 2: [Question text]
-Written Response 2: [Sample answer or guidelines for the response]
+...
+Written Question 4: [Question text]
+Written Response 4: [Sample answer or guidelines for the response]
 
 Ensure the questions cover key topics from {subject} and are varied in difficulty.""")
     print("Cohere call finished")
