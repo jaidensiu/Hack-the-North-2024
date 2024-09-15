@@ -15,13 +15,14 @@ export default function Activity() {
   if (user) {
     const topic = user.topic
     const getSessions = useQuery(api.tasks.getTutorSessions, {id: user._id})
+
     
     return (      
         <FlatList
         data={getSessions}
         keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => (
-          <SessionCard name= {item.studentID} rating = {Number(item.studentsRating)} topic = {topic} location= {"Waterloo"}></SessionCard>
+          <SessionCard name= {item.studentName} lastName = {item.studentLastName} rating = {Number(item.studentsRating)} topic = {topic} location= {"Waterloo"}></SessionCard>
         )}/>)
   }
 

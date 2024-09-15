@@ -173,7 +173,9 @@ export const createNewSession = mutation({
         studentsRating: v.int64(),
         tutorsFeedback: v.string(),
         tutorsAIFeedback: v.optional(v.string()),
-        tutorsRating: v.int64()
+        tutorsRating: v.int64(),
+        studentName: v.string(),
+        studentLastName: v.string()
     },
     handler: async (ctx, args) => {
         const sessionID = await ctx.db.insert("sessions", {
@@ -184,7 +186,9 @@ export const createNewSession = mutation({
             studentsRating: args.studentsRating,
             tutorsFeedback: args.tutorsFeedback,
             tutorsAIFeedback: args.tutorsAIFeedback ?? "",
-            tutorsRating: args.tutorsRating
+            tutorsRating: args.tutorsRating,
+            studentName: args.studentName,
+            studentLastName: args.studentLastName
         });
 
 

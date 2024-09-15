@@ -35,6 +35,8 @@ export default defineSchema({
         tutorsFeedback: v.string(),
         tutorsAIFeedback: v.optional(v.string()),
         tutorsRating: v.int64(),
+        studentName: v.string(),
+        studentLastName: v.string()
     }).index('studentID', ['studentID'])
     ,
     requests: defineTable({

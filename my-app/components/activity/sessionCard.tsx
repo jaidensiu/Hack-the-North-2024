@@ -17,13 +17,15 @@ interface SessionCardProps  {
     rating: number;
     location: string;
     topic: string;
+    lastName: string;
   }
 
 const SessionCard: React.FC<SessionCardProps> = ({
   name,
   rating,
   location,
-  topic
+  topic,
+  lastName
 }) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -45,7 +47,7 @@ const SessionCard: React.FC<SessionCardProps> = ({
             <View style={styles.infoContainer}>
                 <ThemedText style={styles.topicContainer}>{topic}</ThemedText>
                 <View style = {styles.namesContainer}>
-                  <ThemedText style={styles.name}>{name}</ThemedText>
+                  <ThemedText style={styles.name}>{name + " " + lastName}</ThemedText>
                   <View style={styles.ratingContainer}>
                   {[1, 2, 3, 4, 5].map((star) => (
                     <AntDesign
