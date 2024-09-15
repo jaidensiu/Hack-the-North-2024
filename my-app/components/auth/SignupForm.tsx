@@ -14,6 +14,7 @@ interface SignUpFormProps {
     age: number;
     gender: string;
     userType: "student" | "tutor";
+    password: string;
   }) => void;
   onBack: () => void;
 }
@@ -25,10 +26,11 @@ export default function SignUpForm({ onSignUp, onBack }: SignUpFormProps) {
   const [email, setEmail] = useState("");
   const [age, setAge] = useState(18);
   const [gender, setGender] = useState("Male");
+  const [password, setPassword] = useState("");
   const [userType, setUserType] = useState<"student" | "tutor">("student");
 
   const handleSignUp = () => {
-    onSignUp({ firstName, lastName, phoneNumber, email, age, gender, userType });
+    onSignUp({ firstName, lastName, phoneNumber, email, age, gender, userType, password });
   };
 
   return (
@@ -73,6 +75,14 @@ export default function SignUpForm({ onSignUp, onBack }: SignUpFormProps) {
           onChangeText={setEmail}
           placeholder=""
           keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <ThemedText style={styles.label}>Password</ThemedText>
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={setPassword}
+          placeholder=""
           autoCapitalize="none"
         />
         <View style={styles.row}>
