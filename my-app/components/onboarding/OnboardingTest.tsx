@@ -62,7 +62,7 @@ export default function OnboardingTest({
     const responseText = await response.text();
     console.log(responseText);
 
-    onTestComplete(1, 2); // TODO: Replace with actual score and total questions
+    onTestComplete(2, 2); // TODO: Replace with actual score and total questions
   };
 
   return (

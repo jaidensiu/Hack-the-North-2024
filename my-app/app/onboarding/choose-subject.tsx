@@ -45,8 +45,8 @@ export default function ChooseSubjectScreen() {
           pathname: "/onboarding/onboarding-test" as const,
           params: {
             subject,
-            writtenQuestions: JSON.stringify(writtenQuestions),
-            writtenAnswers: JSON.stringify(writtenAnswers),
+            writtenQuestions,
+            writtenAnswers,
           },
         });
       } else {
@@ -54,8 +54,8 @@ export default function ChooseSubjectScreen() {
           pathname: "/(tabs)/studentHome",
           params: {
             subject,
-            writtenQuestions: JSON.stringify(writtenQuestions),
-            writtenAnswers: JSON.stringify(writtenAnswers),
+            writtenQuestions,
+            writtenAnswers,
           },
         });
       }

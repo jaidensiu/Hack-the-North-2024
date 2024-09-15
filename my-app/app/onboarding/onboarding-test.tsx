@@ -5,7 +5,10 @@ import OnboardingTest from "@/components/onboarding/OnboardingTest";
 
 export default function OnboardingTestScreen() {
   const router = useRouter();
-  const { writtenQuestions, writtenAnswers } = useLocalSearchParams();
+  const { writtenQuestions, writtenAnswers } = useLocalSearchParams<{
+    writtenQuestions: string[];
+    writtenAnswers: string[];
+  }>();
 
   console.log("written questions in general page: ", writtenQuestions);
   console.log("written answers in general page: ", writtenAnswers);
