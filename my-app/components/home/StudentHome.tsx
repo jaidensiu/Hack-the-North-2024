@@ -16,22 +16,20 @@ const dropdownOptions = [
 ];
 
 export function StudentHome() {
-  const [topic, setTopic] = useState("Mathematics")
-  const getTutors = useQuery(api.tasks.getTutors, {topic})
-
+  const [location, setLocation] = useState("Address")
+  const getTutors = useQuery(api.tasks.getLocation, {location})
 
   return (
     // <ScrollView headerBackgroundColor={{ light: "#A1CEDC", dark: "#A1CEDC" }}>
-      <ThemedView>
+      <ThemedView style={styles.container}>
         <ThemedText type="subtitle" >Filter By Subject</ThemedText>
         <SubjectPicker options={dropdownOptions} />
         <TextInput
           style={styles.input}
-          value={topic}
-          onChangeText={setTopic}
+          value={location}
+          onChangeText={setLocation}
           placeholder="Where do you need tutoring?"
           autoCapitalize="none"
-    
         />        
         <FlatList
         data={getTutors}
@@ -49,7 +47,7 @@ export function StudentHome() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 32,
   },
   header: {
     flexDirection: "row",

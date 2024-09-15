@@ -32,6 +32,7 @@ export default function SignupFormScreen() {
     age: number;
     gender: string;
     userType: string;
+    location: string;
   }
   if (!context) {
     throw new Error('UserProfile must be used within a UserProvider');
@@ -47,6 +48,7 @@ export default function SignupFormScreen() {
     age,
     gender,
     userType,
+    location
   }: SignUpData) => {
     console.log(
       "Signup with:",
@@ -55,7 +57,8 @@ export default function SignupFormScreen() {
       email,
       age,
       gender,
-      userType
+      userType,
+      location
     );
     try {
       const result = await createUser({
@@ -68,6 +71,7 @@ export default function SignupFormScreen() {
         topic: "temporary",
         sessionHistory: [],
         overallRating: BigInt(0),
+        location: location
       });
       setUserID(result);  // Save the result to the state
       console.log('User created:', result);

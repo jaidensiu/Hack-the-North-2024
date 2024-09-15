@@ -11,7 +11,8 @@ export default defineSchema({
         age: v.int64(),
         topic: v.string(),
         sessionHistory: v.array(v.id("sessions")),
-        overallRating: v.int64()
+        overallRating: v.int64(),
+        location: v.optional(v.string())
     }),
     profile: defineTable({
         userID: v.id("users"),

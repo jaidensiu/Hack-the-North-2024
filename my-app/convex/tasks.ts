@@ -22,6 +22,18 @@ export const getTutors = query({
     },
 });
 
+export const getLocation = query({
+    args: { location: v.string() },
+    handler: async (ctx, args) => {
+        const type = "location"
+        const location = args.location
+        return await ctx.db.query("users")
+            .filter((q) => q.eq(q.field("location"), location))
+            .filter((q) => q.eq(q.field("type"), type)).collect();
+
+    },
+});
+
 // For login buttion
 // input: email string and whether or not the login button has been pressed yet
 // output: 1 user object that matches the email string
@@ -99,7 +111,8 @@ export const createNewUser = mutation({
         age: v.int64(),
         topic: v.string(),
         sessionHistory: v.array(v.id("sessions")),
-        overallRating: v.int64()
+        overallRating: v.int64(),
+        location: v.string()
     },
     handler: async (ctx, args) => {
         const userID = await ctx.db.insert("users", {
@@ -111,7 +124,8 @@ export const createNewUser = mutation({
             age: args.age,
             topic: args.topic,
             sessionHistory: [],
-            overallRating: args.overallRating
+            overallRating: args.overallRating,
+            location: args.location
         });
         return userID;
     },
