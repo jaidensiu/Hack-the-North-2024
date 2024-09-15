@@ -5,7 +5,6 @@ import { ThemedView } from "@/components/ThemedView";
 import UserCard from "./UserCard";
 import SubjectPicker from "@/components/SubjectPicker";
 
-// Import dummy avatar images
 import avatar1 from "@/assets/images/kim.jpeg";
 import avatar2 from "@/assets/images/kim.jpeg";
 

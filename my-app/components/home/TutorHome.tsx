@@ -43,7 +43,6 @@ export function TutorHome() {
   const handleAccept = async (id: string) => {
     console.log(`Accepted user with id: ${id}`);
     try {
-      // Establish connection with the student through Convex backend
       // const sessionId = await establishConnection({ tutorId: "your-tutor-id", studentId: id });
       const sessionId = 1;
       router.replace({
@@ -52,14 +51,12 @@ export function TutorHome() {
       });
     } catch (error) {
       console.error("Failed to establish connection:", error);
-      // Handle error (e.g., show an error message to the user)
     }
   };
 
   const handleReject = (id: string) => {
     console.log(`Rejected user with id: ${id}`);
     setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
-    // You might want to make an API call here to update the rejected status in your backend
   };
 
   return (

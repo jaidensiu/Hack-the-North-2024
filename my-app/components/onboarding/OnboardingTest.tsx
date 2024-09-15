@@ -33,10 +33,6 @@ export default function OnboardingTest({
     new Array(writtenAnswers.length).fill("")
   );
 
-  // print written questions and answers
-  console.log("written questions: ", writtenQuestions);
-  console.log("written answers: ", writtenAnswers);
-
   const handleAnswerChange = (index: number, answer: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = answer;
@@ -65,7 +61,7 @@ export default function OnboardingTest({
       const resultScore = extractScore(result["score"]);
       console.log("Got score?", resultScore);
 
-      onTestComplete(resultScore, writtenAnswers.length); // TODO: Replace with actual score and total questions
+      onTestComplete(resultScore, writtenAnswers.length);
     } catch (error) {
       console.error("Error submitting test:", error);
     }

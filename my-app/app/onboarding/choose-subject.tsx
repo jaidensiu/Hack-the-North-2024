@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { SafeAreaView } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import ChooseSubject from "@/components/onboarding/ChooseSubject";
-import { UserContext } from "../contexts/userContext"; // Adjust the import path as needed
+import { UserContext } from "../contexts/userContext";
 
 const API_URL = "http://10.37.118.75:6000";
 

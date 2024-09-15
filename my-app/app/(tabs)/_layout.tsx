@@ -14,7 +14,6 @@ export default function TabLayout() {
   }
   const { personType } = context;
 
-  // If personType is not set, you might want to redirect to a login screen
   if (!personType) {
     return <Redirect href="/login" />;
   }
