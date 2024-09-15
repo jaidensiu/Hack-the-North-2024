@@ -20,20 +20,20 @@ export default function OnboardingResults({
 
   return (
     <ThemedView style={styles.container}>
-      <View style={styles.header}>
+      <ThemedView style={styles.header}>
         <TouchableOpacity onPress={onBack}>
           <ThemedText>Back</ThemedText>
         </TouchableOpacity>
         <ThemedText style={styles.title}>Your Results</ThemedText>
         <View style={styles.placeholderIcon} />
-      </View>
+      </ThemedView>
 
-      <View style={styles.resultsContainer}>
+      <ThemedView style={styles.resultsContainer}>
         <ThemedText style={styles.score}>{percentage.toFixed(2)}%</ThemedText>
         <ThemedText style={styles.detail}>
           You answered {score} out of {totalQuestions} questions correctly.
         </ThemedText>
-      </View>
+      </ThemedView>
 
       <TouchableOpacity style={styles.finishButton} onPress={onFinish}>
         <ThemedText style={styles.finishButtonText}>Finish</ThemedText>
@@ -50,16 +50,14 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 20,
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
   },
   placeholderIcon: {
-    width: 24,
-    height: 24,
+    width: 40,
+    height: 0,
   },
   resultsContainer: {
     flex: 1,
@@ -67,19 +65,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   score: {
-    fontSize: 48,
+    fontSize: 24,
     fontWeight: "bold",
     color: "green",
-    marginBottom: 20,
+    marginBottom: 16,
   },
   detail: {
-    fontSize: 18,
+    fontSize: 16,
     textAlign: "center",
   },
   finishButton: {
     backgroundColor: "green",
-    padding: 15,
-    borderRadius: 5,
+    padding: 16,
+    borderRadius: 4,
     alignItems: "center",
   },
   finishButtonText: {
