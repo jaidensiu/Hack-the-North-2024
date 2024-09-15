@@ -8,13 +8,14 @@ import ProfileCard from '@/components/profile/ProfileCard';
 interface ProfileScreenProps {
   name: string;
   role: string;
-  rating: string;
+  rating: number;
   rate: string;
+  phone: string,
   email: string;
   description: string;
 }
 
-const ProfileScreen: React.FC<ProfileScreenProps> = ({ name, role, rating, rate, email, description }) => {
+const ProfileScreen: React.FC<ProfileScreenProps> = ({ name, role, rating, rate, phone, email, description }) => {
   // TODO: use the arguments below in the useState
   const [user, setUser] = useState({
     name: 'Franklin Ma',
