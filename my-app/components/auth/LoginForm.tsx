@@ -5,12 +5,13 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 
 interface LoginFormProps {
-  onLogin: (email: string) => void;
+  onLogin: (email: string, password: string) => void;
   onBack: () => void;
 }
 
 export default function LoginForm({ onLogin, onBack }: LoginFormProps) {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <ThemedView style={styles.container}>
@@ -32,8 +33,15 @@ export default function LoginForm({ onLogin, onBack }: LoginFormProps) {
           keyboardType="email-address"
           autoCapitalize="none"
         />
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Enter password"
+          autoCapitalize="none"
+        />
 
-        <TouchableOpacity style={styles.button} onPress={() => onLogin(email)}>
+        <TouchableOpacity style={styles.button} onPress={() => onLogin(email, password)}>
           <ThemedText style={styles.buttonText}>Login</ThemedText>
         </TouchableOpacity>
       </View>

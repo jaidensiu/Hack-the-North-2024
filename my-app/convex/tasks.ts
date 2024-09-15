@@ -98,7 +98,8 @@ export const createNewUser = mutation({
         age: v.int64(),
         topic: v.string(),
         sessionHistory: v.array(v.id("sessions")),
-        overallRating: v.int64()
+        overallRating: v.int64(),
+        password: v.string()
     },
     handler: async (ctx, args) => {
         const userID = await ctx.db.insert("users", {
@@ -110,7 +111,8 @@ export const createNewUser = mutation({
             age: args.age,
             topic: args.topic,
             sessionHistory: [],
-            overallRating: args.overallRating
+            overallRating: args.overallRating,
+            password: args.password
         });
         return userID;
     },

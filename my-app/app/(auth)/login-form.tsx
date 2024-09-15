@@ -1,5 +1,5 @@
 import React, { useState , useEffect, useContext} from 'react';
-import { StyleSheet, View, TextInput, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TextInput, SafeAreaView, TouchableOpacity, Alert , Button} from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ThemedText';
@@ -11,6 +11,7 @@ import { UserContext } from '../contexts/userContext';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);  // State to track form submission
   // const [userID, setUserID] = useState<string | null>(null);
   const router = useRouter();
@@ -27,13 +28,16 @@ export default function LoginScreen() {
 
   useEffect(() => {
     if (userQuery) {
-      setUserID(userQuery?._id);  // Set the retrieved user ID after query resolves
-      console.log("Retrieved user:", userQuery);
+      if(userQuery.password == password) {
+        setUserID(userQuery?._id);  // Set the retrieved user ID after query resolves
+        console.log("Retrieved user:", userQuery);
+      }
     }
   }, [userQuery]);
 
-  const handleLogin = (email: string) => {
+  const handleLogin = (email: string, password: string) => {
     setEmail(email)
+    setPassword(password)
     setIsSubmitted(true);  // Trigger the query by marking the form as submitted
   };
 
