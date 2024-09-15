@@ -8,8 +8,6 @@ import { UserContext } from "../contexts/userContext";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false); // State to track form submission
   // const [userID, setUserID] = useState<string | null>(null);
