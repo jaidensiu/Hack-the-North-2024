@@ -1,47 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
-import { useRouter, Href } from "expo-router";
+import { StyleSheet } from "react-native";
 
-export default function HomeRouter() {
-  const [user, setUser] = useState<{ role: string; id: string } | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
+import ScrollView from "@/components/ScrollView";
+import SubjectPicker from "@/components/SubjectPicker";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
 
-  useEffect(() => {
-    // Simulate fetching user data
-    const fetchUser = async () => {
-      // TODO: Replace with actual user data fetching logic
-      const userData = { role: "student", id: "1" };
-      setUser(userData);
-      setIsLoading(false);
-    };
+export default function HomeScreen() {
+  const dropdownOptions = [
+    { label: "All", value: "all" },
+    { label: "Physics 11", value: "physics11" },
+    { label: "Biology 11", value: "biology11" },
+    { label: "Physics 12", value: "physics12" },
+    { label: "Biology 12", value: "biology12" },
+  ];
 
-    fetchUser();
-  }, []);
-
-  useEffect(() => {
-    if (!isLoading) {
-      let route: Href<any>;
-      if (!user) {
-        // If there's no user, redirect to login
-        route = "/(auth)/login" as Href<"/(auth)/login">;
-      } else if (user.role === "student") {
-        route = "/(app)/home" as Href<"/(app)/home">;
-      } else if (user.role === "tutor") {
-        route = "/(app)/tutorHome" as Href<"/(app)/tutorHome">;
-      } else {
-        // Fallback in case of an unknown role
-        route = "/(auth)/login" as Href<"/(auth)/login">;
-      }
-      router.replace(route);
-    }
-  }, [isLoading, user, router]);
-
-  if (isLoading) {
-    // Return a loading indicator while checking user status
-    return <Text>Loading...</Text>;
-  }
-
-  // This component doesn't render anything itself, it only handles navigation
-  return null;
+  return (
+    <>
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title">SuberTuder</ThemedText>
+      </ThemedView>
+      <ScrollView headerBackgroundColor={{ light: "#A1CEDC", dark: "#A1CEDC" }}>
+        <ThemedView>
+          <ThemedText type="subtitle">Subject</ThemedText>
+          <SubjectPicker options={dropdownOptions} />
+          <ThemedText>item0</ThemedText>
+          <ThemedText>item1</ThemedText>
+          <ThemedText>item2</ThemedText>
+          <ThemedText>item3</ThemedText>
+          <ThemedText>item4</ThemedText>
+          <ThemedText>item5</ThemedText>
+        </ThemedView>
+      </ScrollView>
+    </>
+  );
 }
+
+const styles = StyleSheet.create({
+  titleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 80,
+    paddingLeft: 32,
+    paddingBottom: 8,
+  },
+});
