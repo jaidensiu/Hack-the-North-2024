@@ -15,8 +15,9 @@ export default defineSchema({
     }),
     profile: defineTable({
         userID: v.id("users"),
-        profile: v.id("_storage"),
-        bio: v.string()
+        picture: v.id("_storage"),
+        bio: v.string(),
+        gender: v.string()
     }).index('userID', ['userID']),
     location: defineTable({
         userID: v.id("users"),
