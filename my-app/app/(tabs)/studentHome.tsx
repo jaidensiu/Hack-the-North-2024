@@ -8,7 +8,7 @@ export default function HomeScreen() {
   return (
     <>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">SuberTuder</ThemedText>
+        <ThemedText type="title">Sooper Tooder</ThemedText>
       </ThemedView>
       <StudentHome />
     </>
@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 80,
     paddingLeft: 32,
-    paddingBottom: 8,
+    paddingBottom: 15,
   },
 });

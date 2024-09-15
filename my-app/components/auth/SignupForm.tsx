@@ -14,6 +14,7 @@ interface SignUpFormProps {
     age: number;
     gender: string;
     userType: "student" | "tutor";
+    location: string;
   }) => void;
   onBack: () => void;
 }
@@ -25,10 +26,11 @@ export default function SignUpForm({ onSignUp, onBack }: SignUpFormProps) {
   const [email, setEmail] = useState("");
   const [age, setAge] = useState(18);
   const [gender, setGender] = useState("Male");
+  const [location, setLocation] = useState("");
   const [userType, setUserType] = useState<"student" | "tutor">("student");
 
   const handleSignUp = () => {
-    onSignUp({ firstName, lastName, phoneNumber, email, age, gender, userType });
+    onSignUp({ firstName, lastName, phoneNumber, email, age, gender, userType , location});
   };
 
   return (
@@ -207,7 +209,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   selected: {
-    borderColor: "#44ba5d",
+    borderColor: "#0081FB",
   },
   radioGroup: {
     flexDirection: "row", 
@@ -221,7 +223,7 @@ const styles = StyleSheet.create({
     marginTop: 8, 
   },
   button: {
-    backgroundColor: "#44ba5d", 
+    backgroundColor: "#0081FB", 
     paddingVertical: 16,
     paddingHorizontal: 32,
     borderRadius: 4, 

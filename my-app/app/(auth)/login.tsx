@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import SuberTuderIcon from '@/assets/images/home_icon.jpg';
+import SooperTooderIcon from '@/assets/images/splash.png';
 
 export default function AuthLandingScreen() {
   const router = useRouter();
@@ -18,8 +18,8 @@ export default function AuthLandingScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <Image source={SuberTuderIcon} style={styles.icon} />
-      <ThemedText style={styles.title}>Welcome to SuberTuder</ThemedText>
+      <Image source={SooperTooderIcon} style={styles.icon} />
+      <ThemedText style={styles.title}>Welcome to Sooper Tooder</ThemedText>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={navigateToLogin}>
           <ThemedText style={styles.buttonText}>Login</ThemedText>
@@ -38,23 +38,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    padding: 32,
   },
   icon: {
-    width: 200,
-    height: 200,
     marginBottom: 20,
   },
   title: {
     fontSize: 24,
-    marginBottom: 20,
+    marginBottom: 32,
   },
   buttonContainer: {
     width: '100%',
   },
   button: {
-    backgroundColor: '#44ba5d',
+    backgroundColor: '#0081FB',
     padding: 16,
+    marginHorizontal: 64,
     borderRadius: 4,
     alignItems: 'center',
   },

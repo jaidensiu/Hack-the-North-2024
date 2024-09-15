@@ -2,7 +2,7 @@ import { query } from "./_generated/server";
 import { mutation } from "./_generated/server";
 import { v } from "convex/values";
 
-// Get all users
+// Gets all the users and all thir information from the database
 export const get = query({
     args: {},
     handler: async (ctx) => {
@@ -10,6 +10,33 @@ export const get = query({
     },
 });
 
+export const getTutors = query({
+    args: { topic: v.string() },
+    handler: async (ctx, args) => {
+        const type = "tutor"
+        const topic = args.topic
+        return await ctx.db.query("users")
+            // .filter((q) => q.eq(q.field("topic"), topic))
+            .filter((q) => q.eq(q.field("type"), type)).collect();
+
+    },
+});
+
+export const getLocation = query({
+    args: { location: v.string() },
+    handler: async (ctx, args) => {
+        const type = "location"
+        const location = args.location
+        return await ctx.db.query("users")
+            .filter((q) => q.eq(q.field("location"), location))
+            .filter((q) => q.eq(q.field("type"), type)).collect();
+
+    },
+});
+
+// For login buttion
+// input: email string and whether or not the login button has been pressed yet
+// output: 1 user object that matches the email string
 // Get user based on email
 export const getUser = query({
     args: { email: v.string(), enabled: v.boolean() },
@@ -26,7 +53,8 @@ export const getUser = query({
     },
 });
 
-// Get session based on ID
+// Adds a session to a student/tutors history
+// input: user id and array of sessions
 export const updateUserSessionHistory = mutation({
     args: { id: v.id("users"), sessionHistory: v.array(v.id("sessions")) },
     handler: async (ctx, args) => {
@@ -36,6 +64,43 @@ export const updateUserSessionHistory = mutation({
     },
 });
 
+export const updateTutorFeedback = mutation({
+    args: { sessionID: v.id("sessions"), feedback: v.string() },
+    handler: async (ctx, args) => {
+        const sessionID = args.sessionID;
+        const feedback = args.feedback;
+        await ctx.db.patch(sessionID, { tutorsFeedback: feedback });
+    },
+});
+
+export const updateTutorRating = mutation({
+    args: { sessionID: v.id("sessions"), rating: v.int64() },
+    handler: async (ctx, args) => {
+        const sessionID = args.sessionID;
+        const rating = args.rating;
+        await ctx.db.patch(sessionID, { tutorsRating: rating });
+    },
+});
+
+export const updateStudentFeebdack = mutation({
+    args: { sessionID: v.id("sessions"), feedback: v.string() },
+    handler: async (ctx, args) => {
+        const sessionID = args.sessionID;
+        const feedback = args.feedback;
+        await ctx.db.patch(sessionID, { studentsFeedback: feedback });
+    },
+});
+
+export const updateStudentRating = mutation({
+    args: { sessionID: v.id("sessions"), rating: v.int64() },
+    handler: async (ctx, args) => {
+        const sessionID = args.sessionID;
+        const rating = args.rating;
+        await ctx.db.patch(sessionID, { studentsRating: rating });
+    },
+});
+
+// Creates a new user
 export const createNewUser = mutation({
     args: {
         firstName: v.string(),
@@ -46,7 +111,8 @@ export const createNewUser = mutation({
         age: v.int64(),
         topic: v.string(),
         sessionHistory: v.array(v.id("sessions")),
-        overallRating: v.int64()
+        overallRating: v.int64(),
+        location: v.string()
     },
     handler: async (ctx, args) => {
         const userID = await ctx.db.insert("users", {
@@ -58,12 +124,14 @@ export const createNewUser = mutation({
             age: args.age,
             topic: args.topic,
             sessionHistory: [],
-            overallRating: args.overallRating
+            overallRating: args.overallRating,
+            location: args.location
         });
         return userID;
     },
 });
 
+// Creates a new request
 export const createNewRequest = mutation({
     args: {
         studentID: v.id("users"),
@@ -83,8 +151,7 @@ export const createNewRequest = mutation({
     },
 });
 
-
-// Will write update function for request
+// Creates a new session
 export const createNewSession = mutation({
     args: {
         studentID: v.id("users"),

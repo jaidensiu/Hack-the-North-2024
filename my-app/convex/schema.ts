@@ -11,8 +11,20 @@ export default defineSchema({
         age: v.int64(),
         topic: v.string(),
         sessionHistory: v.array(v.id("sessions")),
-        overallRating: v.int64()
+        overallRating: v.int64(),
+        location: v.optional(v.string())
     }),
+    profile: defineTable({
+        userID: v.id("users"),
+        picture: v.id("_storage"),
+        bio: v.string(),
+        gender: v.string()
+    }).index('userID', ['userID']),
+    location: defineTable({
+        userID: v.id("users"),
+        latitude: v.float64(),
+        longitude: v.float64()
+    }).index('userID', ['userID']),
     sessions: defineTable({
         studentID: v.id("users"),
         tutorID: v.id("users"),
